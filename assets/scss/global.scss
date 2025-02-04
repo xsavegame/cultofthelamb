@@ -1,5 +1,5 @@
-@import "bootstrap/scss/bootstrap";
-@import "vanilla-jsoneditor/themes/jse-theme-dark.css";
+@use "bootstrap/scss/bootstrap" as *;
+@use "vanilla-jsoneditor/themes/jse-theme-dark.css" as *;
 
 .page-enter-active,
 .page-leave-active {
