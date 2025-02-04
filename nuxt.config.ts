@@ -9,6 +9,7 @@ export default defineNuxtConfig({
       title: "Cult of the Lamb - Save file editor",
       htmlAttrs: {
         lang: "en",
+        'data-bs-theme': 'dark',
       },
       link: [
         { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },

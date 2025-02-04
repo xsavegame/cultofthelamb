@@ -13,7 +13,7 @@
                     </div>
                 </div>
             </form>
-            <Footer />
+            <Footer @loadNewFile="fileUploadModal?.modal?.toggle()" />
         </div>
     </div>
 </template>
@@ -33,13 +33,18 @@ onMounted(() => {
 });
 
 const onFileData = async (data: Data) => {
-    // TODO: Error handling
-    await saveStore.importSave(data.data);
-    saveStore.setFileData({
-        name: data.name,
-        encrypted: data.data[0] === 69
-    })
-    fileUploadModal.value?.modal?.hide();
+    try {
+        // TODO: Error handling
+        await saveStore.importSave(data.data);
+        saveStore.setFileData({
+            name: data.name,
+            encrypted: data.data[0] === 69
+        })
+        fileUploadModal.value?.modal?.hide();
+    } catch (error) {
+        alert('An error occurred while importing the save file.');
+        console.error('An error occurred while importing the save file.', error);
+    }
 }
 
 const loadTestData = async () => {

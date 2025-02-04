@@ -1,11 +1,13 @@
 <template>
     <footer class="d-flex fixed-bottom justify-between align-items-center p-3">
         <div class="position-absolute">
-            <span class="text-muted text-center">Made with ❤ by SavagE & hayper</span>
+            <span class="text-muted text-center">Made with ❤ by SavagE & hayper. Updated by thestrangedev</span>
         </div>
         <div class="mx-auto">
-            <input type="submit" class="btn btn-lg btn-primary bg-dark" form="form" value="Save"
-                @click="downloadSaveFile">
+            <button class="btn btn-lg btn-success me-1" form="form"
+                @click="downloadSaveFile">Save</button>
+            <button type="button" class="btn btn-lg btn-primary" form="form"
+                @click="loadNewFile">Load A New File</button>
         </div>
     </footer>
 </template>
@@ -26,4 +28,11 @@ const downloadSaveFile = async (e: MouseEvent) => {
     anchor.click();
     URL.revokeObjectURL(url);
 };
+
+const emit = defineEmits();
+
+const loadNewFile = () => {
+    emit('loadNewFile');
+};
+
 </script>

@@ -1,45 +1,24 @@
 [
   {
-    "id": 23,
-    "image": "/Traits/23.png",
+    "id": 2,
+    "image": "/Traits/2.png",
     "effect": "Positive",
-    "name": "Coprophiliac",
-    "description": "Gain 10 Faith when falling ill."
-  },
-  {
-    "id": 21,
-    "image": "/Traits/21.png",
-    "effect": "Positive",
-    "name": "Gullible",
-    "description": "15% easier to level up."
+    "name": "Naturally Obedient",
+    "description": "On recruiting this Follower immediately gain 10 Faith."
   },
   {
     "id": 11,
     "image": "/Traits/11.png",
     "effect": "Positive",
     "name": "Faithful",
-    "description": "Generates Devotion 15% faster."
-  },
-
-
-
-
-
-
-
-  {
-    "id": 18,
-    "image": "/Traits/18.png",
-    "effect": "Positive",
-    "name": "Materialistic",
-    "description": "Gain Faith when building better sleeping quarters."
+    "description": "Generates Devotion 15% faster. Mutually exclusive with Faithless. "
   },
   {
-    "id": 2,
-    "image": "/Traits/2.png",
+    "id": 14,
+    "image": "/Traits/12.png",
     "effect": "Positive",
-    "name": "Naturally Obedient",
-    "description": "On recruiting this Follower immediately gain 10 Faith."
+    "name": "Faithless",
+    "description": "Gain 5 Faith when another Cult member becomes ill. Note: Max 1"
   },
   {
     "id": 16,
@@ -56,11 +35,102 @@
     "description": "Ignores dissenters when they preach."
   },
   {
+    "id": 18,
+    "image": "/Traits/18.png",
+    "effect": "Positive",
+    "name": "Materialistic",
+    "description": "Gain Faith when building better sleeping quarters."
+  },
+  {
+    "id": 21,
+    "image": "/Traits/21.png",
+    "effect": "Positive",
+    "name": "Gullible",
+    "description": "Follower receives extra +15% from all Loyalty sources. Mutually exclusive with Cynical."
+  },
+  {
+    "id": 23,
+    "image": "/Traits/23.png",
+    "effect": "Positive",
+    "name": "Germaphobe",
+    "description": "Gain 10 Faith when falling ill. Won't vomit when seeing poop or vomit. Mutually exclusive with Germaphobe."
+  },
+  {
+    "id": 24,
+    "image": "/Traits/24.png",
+    "effect": "Positive",
+    "name": "Industrious",
+    "description": "Increase work speed by 15%."
+  },
+  {
     "id": 32,
     "image": "/Traits/32.png",
     "effect": "Positive",
     "name": "Immortal",
     "description": "Will never reach old age."
+  },
+  {
+    "id": 33,
+    "image": "/Traits/33.png",
+    "effect": "Positive",
+    "name": "Don't Starve",
+    "description": "Will never starve."
+  },
+  {
+    "id": 39,
+    "image": "/Traits/39.png",
+    "effect": "Positive",
+    "name": "Royal Pooper",
+    "description": "All poops are golden."
+  },
+  {
+    "id": 42,
+    "image": "/Traits/42.png",
+    "effect": "Positive",
+    "name": "Lustful",
+    "description": "Very...affectionate towards other Followers."
+  },
+  {
+    "id": 43,
+    "image": "/Traits/43.png",
+    "effect": "Positive",
+    "name": "Fashionable",
+    "description": "Generates Devotion 20% faster when wearing a unique outfit."
+  },
+  {
+    "id": 48,
+    "image": "/Traits/48.png",
+    "effect": "Positive",
+    "name": "Hedonist",
+    "description": "Decreases productivity by 10% but increases Sin generation by 15%."
+  },
+  {
+    "id": 49,
+    "image": "/Traits/49.png",
+    "effect": "Positive",
+    "name": "Ascetic",
+    "description": "Decreases Sin generation by 10% but increases productivity by 15%."
+  },
+  {
+    "id": 51,
+    "image": "/Traits/51.png",
+    "effect": "Positive",
+    "name": "Unrepentant",
+    "description": "Produces Sin 15% faster."
+  },
+  {
+    "id": 69,
+    "image": "/Traits/52.png",
+    "effect": "Positive",
+    "name": "Pettable",
+    "description": "Can be pet regardless of the follower's form."
+  },
+  {
+    "id": 79,
+    "image": "/Traits/52.png",
+    "effect": "Positive",
+    "name": "Polyamorous",
+    "description": "Never gets jealous of other spouse from them; cannot get other wedding related traits upon getting married."
   },
   {
     "id": 20,

@@ -49,7 +49,7 @@
                             <label>Follower Skin:</label>
                             <select v-model.number="skinCharacter" class="form-select">
                                 <option v-for="(followerSkin, index) of followerSkinList" :value="index">{{
-                                        followerSkin.name
+                                    followerSkin.name
                                 }}</option>
                             </select>
                         </div>
@@ -59,7 +59,7 @@
                                 <option
                                     v-for="(unused, index) of followerSkinList[getPropertyCaseInsensitive(props.followerData, 'SkinCharacter')].variant"
                                     :value="index">{{
-                                            index === 0 ? "Default" : index
+                                        index === 0 ? "Default" : index
                                     }}</option>
                             </select>
                         </div>
@@ -103,11 +103,16 @@
                             </div>
                         </div>
                     </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-6 offset-6 mb-3">
+                            <input type="text" placeholder="Search..." class="form-control" v-model="serachTrait">
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col">
-                            <hr />
-                            <table class="table">
-                                <thead>
+                            <table class="table table-striped">
+                                <thead class="thead-dark">
                                     <tr>
                                         <th class="col">Unlocked?</th>
                                         <th class="col">Image</th>
@@ -117,7 +122,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="trait in followerTraitList">
+                                    <tr v-for="trait in followerTraitListFiltered">
                                         <td class="col-1">
                                             <input v-model="traits" type="checkbox" class="form-check-input"
                                                 :value="trait.id">
@@ -126,7 +131,7 @@
                                             <div class="center-container">
                                                 <NuxtImg loading="eager" :src="trait.image"
                                                     class="image-inner small-size" alt="Image not available" width="64"
-                                                    height="64" quality="100" fit="inside" />
+                                                    height="64" quality="100" fit="inside" :title="trait.name" />
                                             </div>
                                         </td>
                                         <td class="col-1">
@@ -198,30 +203,30 @@ import { Modal } from "bootstrap";
 
 const followerModalElement = ref<HTMLElement>();
 const followerModal = ref<Modal>();
+const serachTrait = ref("");
 
 const { data: followerTraitList } = useFetch<{ id: number, image: string, effect: "Positive" | "Negative", name: string, description: string }[]>("/data/followerTrait.json");
 const { data: followerSkinList } = useFetch<{ name: string; variant: string[]; }[]>("/data/followerSkin.json");
+const sortedTraits = computed(() => {
+    const traits = followerTraitList.value ?? [];
 
-onMounted(() => {
-    if (!followerModalElement.value) return;
+    return traits.sort((a, b) => {
+        // sort by effect, positive first
+        const effectSort = { Positive: 0, Negative: 1 };
 
-    followerModal.value = new Modal(followerModalElement.value, {
-        keyboard: false
+        if (effectSort[a.effect] != effectSort[b.effect]) {
+            return effectSort[a.effect] - effectSort[b.effect];
+        }
+
+        // sort by name
+        return a.name.localeCompare(b.name);
     });
 });
 
-const updateSkin = () => {
-    if (!followerSkinList.value) return;
-    let skinName = followerSkinList.value[getPropertyCaseInsensitive(props.followerData, "SkinCharacter")].variant[getPropertyCaseInsensitive(props.followerData, "SkinVariation")];
-    if (!skinName) {
-        props.followerData.SkinVariation = 0;
-        skinName = followerSkinList.value[getPropertyCaseInsensitive(props.followerData, "SkinCharacter")].variant[getPropertyCaseInsensitive(props.followerData, "SkinVariation")];
-    };
-    setPropertyCaseInsensitive(props.followerData, "SkinName", skinName);
-}
-
-watch(() => getPropertyCaseInsensitive(props.followerData, "SkinCharacter"), updateSkin);
-watch(() => getPropertyCaseInsensitive(props.followerData, "SkinVariation"), updateSkin);
+const followerTraitListFiltered = computed(() =>  {
+    const filtered = sortedTraits.value.filter(trait => trait.name.toLowerCase().includes(serachTrait.value.toLowerCase()));
+    return filtered;
+});
 
 const props = defineProps<{ followerData: any, isDead?: boolean }>();
 
@@ -255,6 +260,27 @@ const exhaustion = generateObjectInsensitiveComputed(() => props.followerData, "
 const rest = generateObjectInsensitiveComputed(() => props.followerData, "Rest");
 const starvation = generateObjectInsensitiveComputed(() => props.followerData, "Starvation");
 const satiation = generateObjectInsensitiveComputed(() => props.followerData, "Satiation");
+
+onMounted(() => {
+    if (!followerModalElement.value) return;
+
+    followerModal.value = new Modal(followerModalElement.value, {
+        keyboard: false
+    });
+});
+
+const updateSkin = () => {
+    if (!followerSkinList.value) return;
+    let skinName = followerSkinList.value[getPropertyCaseInsensitive(props.followerData, "SkinCharacter")].variant[getPropertyCaseInsensitive(props.followerData, "SkinVariation")];
+    if (!skinName) {
+        props.followerData.SkinVariation = 0;
+        skinName = followerSkinList.value[getPropertyCaseInsensitive(props.followerData, "SkinCharacter")].variant[getPropertyCaseInsensitive(props.followerData, "SkinVariation")];
+    };
+    setPropertyCaseInsensitive(props.followerData, "SkinName", skinName);
+}
+
+watch(() => getPropertyCaseInsensitive(props.followerData, "SkinCharacter"), updateSkin);
+watch(() => getPropertyCaseInsensitive(props.followerData, "SkinVariation"), updateSkin);
 
 defineExpose({
     modal: followerModal

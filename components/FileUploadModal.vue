@@ -61,8 +61,8 @@
                             real save file,
                             click the button below to load a test save file.
                         </p>
-                        <button class="btn btn-outline-secondary" @click="$emit('testData')" type="button">Load test
-                            data</button>
+                        <button class="btn btn-outline-secondary me-1" @click="$emit('testData')" type="button">Load test data</button>
+                        <button class="btn btn-secondary" v-if="saveStore.$state.fileData" @click="uploadModal?.hide()">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -72,6 +72,9 @@
 
 <script setup lang="ts">
 import { Modal } from "bootstrap";
+import { useSaveData } from "~/stores/saveData";
+
+const saveStore = useSaveData();
 
 export type Data = {
     name: string;
