@@ -57,7 +57,7 @@
                             <label>Follower Variant:</label>
                             <select v-model.number="skinVariation" class="form-select">
                                 <option
-                                    v-for="(unused, index) of followerSkinList[getPropertyCaseInsensitive(props.followerData, 'SkinCharacter')].variant"
+                                    v-for="(unused, index) of followerSkinList[getPropertyCaseInsensitive(props.followerData, 'SkinCharacter')]?.variant ?? []"
                                     :value="index">{{
                                         index === 0 ? "Default" : index
                                     }}</option>
@@ -271,10 +271,10 @@ onMounted(() => {
 
 const updateSkin = () => {
     if (!followerSkinList.value) return;
-    let skinName = followerSkinList.value[getPropertyCaseInsensitive(props.followerData, "SkinCharacter")].variant[getPropertyCaseInsensitive(props.followerData, "SkinVariation")];
+    let skinName = followerSkinList.value[getPropertyCaseInsensitive(props.followerData, "SkinCharacter")]?.variant[getPropertyCaseInsensitive(props.followerData, "SkinVariation")];
     if (!skinName) {
         props.followerData.SkinVariation = 0;
-        skinName = followerSkinList.value[getPropertyCaseInsensitive(props.followerData, "SkinCharacter")].variant[getPropertyCaseInsensitive(props.followerData, "SkinVariation")];
+        skinName = followerSkinList.value[getPropertyCaseInsensitive(props.followerData, "SkinCharacter")]?.variant[getPropertyCaseInsensitive(props.followerData, "SkinVariation")];
     };
     setPropertyCaseInsensitive(props.followerData, "SkinName", skinName);
 }

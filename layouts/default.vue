@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { Data } from "../components/FileUploadModal.vue";
+import { type Data } from "../components/FileUploadModal.vue";
 import { useSaveData } from "~/stores/saveData";
 import { type Modal } from "bootstrap";
 

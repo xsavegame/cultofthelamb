@@ -8,19 +8,18 @@
     "postinstall": "nuxi prepare"
   },
   "devDependencies": {
-    "@nuxt/image-edge": "1.0.0-27990059.c3f31ce",
-    "@pinia/nuxt": "^0.4.11",
+    "@nuxt/image": "^1.9.0",
+    "@pinia/nuxt": "^0.9.0",
     "@popperjs/core": "^2.11.8",
     "@types/bootstrap": "^5.2.10",
     "@types/node": "^18.19.75",
     "bootstrap": "^5.3.3",
-    "json-editor-vue": "^0.10.19",
-    "nuxt": "~3.3.3",
+    "json-editor-vue": "^0.17.3",
+    "nuxt": "^3.15.0",
     "sass": "^1.83.4",
     "source-map-support": "^0.5.21",
-    "typescript": "~5.4.0",
-    "vanilla-jsoneditor": "^0.16.1",
-    "vue-tsc": "^1.8.27"
+    "typescript": "~5.5.0",
+    "vue-tsc": "~2.1.6"
   },
   "packageManager": "pnpm@10.2.0",
   "pnpm": {

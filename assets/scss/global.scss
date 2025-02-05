@@ -1,5 +1,4 @@
-@use "bootstrap/scss/bootstrap" as *;
-@use "vanilla-jsoneditor/themes/jse-theme-dark.css" as *;
+@forward "bootstrap/scss/bootstrap";
 
 .page-enter-active,
 .page-leave-active {
