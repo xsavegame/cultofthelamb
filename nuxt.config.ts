@@ -20,7 +20,7 @@ export default defineNuxtConfig({
         'data-bs-theme': 'dark',
       },
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'icon', type: 'image/x-icon', href: `${baseURL}favicon.ico` },
         { rel: 'preconnect', href: 'https://cotl.xl0.org/', crossorigin: '' },
         { rel: 'dns-prefetch', href: 'https://cotl.xl0.org/' },
       ],
@@ -43,11 +43,15 @@ export default defineNuxtConfig({
     },
   },
 
+  image: {
+    provider: 'ipx',
+  },
+
   typescript: {
     shim: false,
     strict: true,
     typeCheck: true,
   },
 
-  compatibilityDate: '2025-02-05',
+  compatibilityDate: '2025-02-05'
 });
