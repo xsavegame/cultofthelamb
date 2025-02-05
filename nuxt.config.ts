@@ -1,7 +1,59 @@
+import fs from 'fs';
+
 let baseURL = process.env.NUXT_APP_BASE_URL ?? '/';
 
 if (!baseURL.endsWith('/')) {
   baseURL += '/';
+}
+
+const routes: string[] = [];
+
+if (
+  process.env.NODE_ENV === 'production' &&
+  process.env.APP_ENV === 'github_pages'
+) {
+  function generateRoute(
+    dir: string,
+    options: { quality?: number; size?: string[]; fitinside?: boolean } = {}
+  ) {
+    const mergeOption = {
+      ...{ quality: 100, size: ['64x64'], fitinside: true },
+      ...options,
+    };
+
+    if (mergeOption.size.length === 0) {
+      mergeOption.size = [''];
+    }
+
+    fs.readdirSync(`./public/${dir}`).forEach((file) => {
+      if (/\.(png|jpg|jpeg)$/.test(file)) {
+        for (const size of mergeOption.size) {
+          const query = [];
+
+          if (mergeOption.quality) {
+            query.push(`q_${mergeOption.quality}`);
+          }
+
+          if (mergeOption.fitinside) {
+            query.push('fit_inside');
+          }
+
+          if (size) {
+            query.push(`s_${size}`);
+          }
+
+          if (query.length > 0) {
+            routes.push(`/_ipx/${query.join('&')}/${dir}/${file}`);
+          }
+        }
+      }
+    });
+  }
+
+  generateRoute('Cooking_Recipes', { size: ['128x128', '64x64'] });
+  generateRoute('Traits', { size: ['128x128', '64x64'] });
+  generateRoute('Items', { size: ['128x128', '64x64'], quality: 0 });
+  generateRoute('Tarot_Cards', { size: [] });
 }
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
@@ -53,5 +105,11 @@ export default defineNuxtConfig({
     typeCheck: true,
   },
 
-  compatibilityDate: '2025-02-05'
+  nitro: {
+    prerender: {
+      routes,
+    },
+  },
+
+  compatibilityDate: '2025-02-05',
 });
