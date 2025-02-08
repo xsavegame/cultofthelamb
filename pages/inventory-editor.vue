@@ -3,7 +3,7 @@
         <div v-for="itemList in itemData">
             <h2>{{ itemList.name }}</h2>
             <hr />
-            <div class="row row-cols-5 g-4 mb-4">
+            <div class="row row-cols-2 row-cols-sm-4 row-cols-lg-6 g-4 mb-4">
                 <div v-for="item in itemList.items" class="col">
                     <div class="card">
                         <div class="text-center bg-light center-container">

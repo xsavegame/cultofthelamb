@@ -1,14 +1,15 @@
 <template>
-    <footer class="d-flex fixed-bottom justify-between align-items-center p-3">
-        <div class="position-absolute">
+    <footer class="row fixed-bottom p-3">
+        <div class="col mt-3">
             <span class="text-muted text-center">Made with ❤ by SavagE & hayper. Updated by thestrangedev</span>
         </div>
-        <div class="mx-auto">
-            <button class="btn btn-lg btn-success me-1" form="form"
+        <div class="col text-center">
+            <button class="btn btn-lg btn-success me-1 mb-1" form="form"
                 @click="downloadSaveFile">Save</button>
             <button type="button" class="btn btn-lg btn-primary" form="form"
                 @click="loadNewFile">Load A New File</button>
         </div>
+        <div class="col"></div>
     </footer>
 </template>
 

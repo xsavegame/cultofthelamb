@@ -59,45 +59,36 @@
                     </div>
                     <hr>
                     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3 mb-3">
-                        <!-- TODO: Make this vfor -->
                         <div class="col">
-                            <label>Follower Outfit:</label>
-                            <select v-model.number="formData.Outfit" class="form-select">
-                                <option value="0">Pre Indoctrination clothes</option>
-                                <option value="1">Mission Backpack</option>
-                                <option value="3">Indoctrinated Clothes</option>
-                                <option value="7">Elderly Clothes</option>
-                                <option value="8">Holiday Shirt</option>
+                            <label :for="makeFormId('Outfit')">Follower Outfit:</label>
+                            <select v-model.number="formData.Outfit" class="form-select" :id="makeFormId('Outfit')">
+                                <option v-for="outfit of outfitList" :value="outfit.id"
+                                    :key="`Outfit-${formData.ID}-${outfit.id}`">{{ outfit.name }}</option>
                             </select>
                         </div>
                         <div v-if="followerSkinList" class="col">
-                            <label>Follower Skin:</label>
-                            <select v-model.number="formData.SkinCharacter" class="form-select">
-                                <option v-for="(followerSkin, index) of followerSkinList" :value="index">{{
-                                    followerSkin.name
+                            <label :for="makeFormId('SkinCharacter')">Follower Skin:</label>
+                            <select v-model.number="formData.SkinCharacter" class="form-select"
+                                :id="makeFormId('SkinCharacter')">
+                                <option v-for="(followerSkin, index) of followerSkinList" :value="index"
+                                    :key="`SkinCharacter-${formData.ID}-${index}`">{{
+                                        followerSkin.name
                                     }}</option>
                             </select>
                         </div>
                         <div v-if="followerSkinList" class="col">
-                            <label>Follower Variant:</label>
-                            <select v-model.number="formData.SkinCharacter" class="form-select">
-                                <option
-                                    v-for="(_, index) of followerSkinList[getPropertyCaseInsensitive(props.followerData, 'SkinCharacter')]?.variant ?? []"
-                                    :value="index">{{
-                                        index === 0 ? "Default" : index
-                                    }}</option>
+                            <label :for="makeFormId('SkinVariation')">Follower Variant:</label>
+                            <select v-model.number="formData.SkinVariation" class="form-select"
+                                :id="makeFormId('SkinVariation')">
+                                <option v-for="(name, index) of followerSkinList[formData.SkinCharacter]?.variant ?? []"
+                                    :value="index" :key="`SkinVariation-${formData.ID}-${index}`">{{ name }}</option>
                             </select>
                         </div>
-                        <!-- TODO: Make this vfor -->
                         <div class="col">
-                            <label>Follower Necklace: </label>
-                            <select v-model.number="formData.Necklace" class="form-select">
-                                <option value="0">None</option>
-                                <option value="45">Flower Necklace</option>
-                                <option value="46">Feather Necklace</option>
-                                <option value="47">Skull Necklace</option>
-                                <option value="48">Natures Necklace</option>
-                                <option value="49">Moon Necklace</option>
+                            <label :for="makeFormId('Necklace')">Follower Necklace: </label>
+                            <select v-model.number="formData.Necklace" class="form-select" :id="makeFormId('Necklace')">
+                                <option v-for="necklace of necklaceList" :value="necklace.id"
+                                    :key="`Necklace-${formData.ID}-${necklace.id}`">{{ necklace.name }}</option>
                             </select>
                         </div>
                     </div>
@@ -126,7 +117,7 @@
                         <div class="col">
                             <div class="d-grid align-items-center justify-content-center py-3">
                                 <NuxtImg loading="eager"
-                                    :src='constructFollowerPreviewUrl(props.followerData, false, props.isDead)'
+                                    :src='constructFollowerPreviewUrl(formData, false, props.isDead)'
                                     alt="Preview not available" quality="100" fit="inside" />
                             </div>
                         </div>
@@ -190,7 +181,8 @@
                                         </td>
                                         <td class="col">
                                             <p>{{ trait.description }}</p>
-                                            <p v-if="trait.cultTrait" class="fw-bold">This should be disable if thecult trait is enabled</p>
+                                            <p v-if="trait.cultTrait" class="fw-bold">This should be disable if thecult
+                                                trait is enabled</p>
                                             <p v-if="currentCultTraits?.includes(trait.id)" class="text-danger fw-bold">
                                                 This trait is currently disabled as it conflicts with a cult trait</p>
                                         </td>
@@ -277,6 +269,41 @@ type FollowerTrait = {
 const { data: followerTraitList, status: followerTraitLoading } = useFetch<FollowerTrait[]>("/data/followerTrait.json");
 const { data: followerSkinList } = useFetch<{ name: string; variant: string[]; }[]>("/data/followerSkin.json");
 const { data: traitData } = useFetch<Array<{ name: string, leftBranch: Array<{ id: number }>, rightBranch: Array<{ id: number }> }>>("/data/traitData.json");
+const { data: necklaceList } = useFetch<{ id: number, name: string }[]>("/data/necklaces.json");
+const { data: outfitList } = useFetch<{ id: number, name: string }[]>("/data/followerOutfit.json");
+
+const props = defineProps<{ followerData: Follower, isDead?: boolean }>();
+// copy from props
+const formData = ref({
+    ID: props.followerData.ID,
+    XPLevel: props.followerData.XPLevel,
+    Age: props.followerData.Age,
+    LifeExpectancy: props.followerData.LifeExpectancy,
+    Name: props.followerData.Name,
+    DayJoined: props.followerData.DayJoined,
+    MemberDuration: props.followerData.MemberDuration,
+    SacrificialValue: props.followerData.SacrificialValue,
+    Outfit: props.followerData.Outfit,
+    SkinCharacter: props.followerData.SkinCharacter,
+    SkinVariation: props.followerData.SkinVariation,
+    SkinColour: props.followerData.SkinColour,
+    SkinName: props.followerData.SkinName,
+    Necklace: props.followerData.Necklace,
+    IsStarving: props.followerData.IsStarving,
+    MarriedToLeader: props.followerData.MarriedToLeader,
+    TaxEnforcer: props.followerData.TaxEnforcer,
+    FaithEnforcer: props.followerData.FaithEnforcer,
+    Traits: Array.from(props.followerData.Traits),
+    Adoration: props.followerData.Adoration,
+    Faith: props.followerData.Faith,
+    Happiness: props.followerData.Happiness,
+    Illness: props.followerData.Illness,
+    Reeducation: props.followerData.Reeducation,
+    Exhaustion: props.followerData.Exhaustion,
+    Rest: props.followerData.Rest,
+    Starvation: props.followerData.Starvation,
+    Satiation: props.followerData.Satiation,
+});
 
 const allCultTraits = computed(() => {
     const traits = new Set<number>();
@@ -326,39 +353,7 @@ const followerTraitListFiltered = computed(() => {
     return filtered;
 });
 
-const props = defineProps<{ followerData: Follower, isDead?: boolean }>();
-
 const makeFormId = (name: string) => `follower-modal-edit-${name}-${props.followerData.ID}`;
-
-// copy from props
-const formData = ref({
-    ID: props.followerData.ID,
-    XPLevel: props.followerData.XPLevel,
-    Age: props.followerData.Age,
-    LifeExpectancy: props.followerData.LifeExpectancy,
-    Name: props.followerData.Name,
-    DayJoined: props.followerData.DayJoined,
-    MemberDuration: props.followerData.MemberDuration,
-    SacrificialValue: props.followerData.SacrificialValue,
-    Outfit: props.followerData.Outfit,
-    SkinCharacter: props.followerData.SkinCharacter,
-    SkinVariation: props.followerData.SkinVariation,
-    Necklace: props.followerData.Necklace,
-    IsStarving: props.followerData.IsStarving,
-    MarriedToLeader: props.followerData.MarriedToLeader,
-    TaxEnforcer: props.followerData.TaxEnforcer,
-    FaithEnforcer: props.followerData.FaithEnforcer,
-    Traits: Array.from(props.followerData.Traits),
-    Adoration: props.followerData.Adoration,
-    Faith: props.followerData.Faith,
-    Happiness: props.followerData.Happiness,
-    Illness: props.followerData.Illness,
-    Reeducation: props.followerData.Reeducation,
-    Exhaustion: props.followerData.Exhaustion,
-    Rest: props.followerData.Rest,
-    Starvation: props.followerData.Starvation,
-    Satiation: props.followerData.Satiation,
-});
 
 const totalPositiveTraits = computed(() => {
     return formData.value.Traits.filter(traitID => followerTraitList.value?.find(trait => trait.id === traitID)?.effect === "Positive").length;
@@ -405,7 +400,17 @@ const updateSkin = () => {
         props.followerData.SkinVariation = 0;
         skinName = followerSkinList.value[getPropertyCaseInsensitive(props.followerData, "SkinCharacter")]?.variant[getPropertyCaseInsensitive(props.followerData, "SkinVariation")];
     };
-    setPropertyCaseInsensitive(props.followerData, "SkinName", skinName);
+
+    if (!skinName || /^Unknown Skin/.test(skinName)) {
+        alert("Please not use the unknown skin, it may break the game. Add a new skin in Github instead.");
+        formData.value.SkinCharacter = props.followerData.SkinCharacter;
+        formData.value.SkinVariation = props.followerData.SkinVariation;
+        formData.value.SkinName = props.followerData.SkinName;
+        formData.value.SkinColour = props.followerData.SkinColour;
+        return;
+    }
+
+    formData.value.SkinName = skinName;
 }
 
 type RefData<T> = T extends Ref<infer U> ? U : T;
@@ -413,13 +418,14 @@ export type FollowerEditEvent = RefData<typeof formData>;
 
 const saveEvent = defineEmits<{ save: [FollowerEditEvent, number] }>();
 
+
 const save = () => {
     saveEvent("save", cloneDeep(formData.value), props.followerData.ID);
     showModal.value = false;
 }
 
-watch(() => getPropertyCaseInsensitive(props.followerData, "SkinCharacter"), updateSkin);
-watch(() => getPropertyCaseInsensitive(props.followerData, "SkinVariation"), updateSkin);
+watch(() => formData.value?.SkinCharacter, updateSkin);
+watch(() => formData.value?.SkinVariation, updateSkin);
 watch(() => props.followerData, () => reset());
 watch(showModal, (newValue) => {
     if (newValue) {
@@ -428,6 +434,7 @@ watch(showModal, (newValue) => {
         followerModal.value?.hide();
     }
 });
+
 
 defineExpose({
     modal: followerModal

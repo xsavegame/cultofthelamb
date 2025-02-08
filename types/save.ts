@@ -107,6 +107,8 @@ export const FollowerSchema = Type.Object({
   SacrificialValue: Type.Number(),
   Outfit: Type.Number(),
   SkinCharacter: Type.Number(),
+  SkinColour: Type.Number(),
+  SkinName: Type.String(),
   Necklace: Type.Number(),
   IsStarving: Type.Boolean(),
   MarriedToLeader: Type.Boolean(),

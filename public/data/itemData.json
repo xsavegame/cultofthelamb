@@ -31,6 +31,16 @@
         "id": 114,
         "image": "/Items/114.png",
         "name": "Holy Talisman"
+      },
+      {
+        "id": 119,
+        "image": "/Items/119.png",
+        "name": "God Tear"
+      },
+      {
+        "id": 154,
+        "image": "/Items/154.png",
+        "name": "Sin"
       }
     ]
   },
@@ -246,7 +256,13 @@
         "id": 117,
         "image": "/Items/117.png",
         "name": "Shell"
+      },
+      {
+        "id": 127,
+        "image": "/Items/127.png",
+        "name": "Golden Skull Necklace"
       }
     ]
   }
 ]
+

@@ -3,20 +3,20 @@
         <div v-if="getPropertyCaseInsensitive(saveStore.saveData, 'Followers').length > 0">
             <FollowerModalEdit v-if="selectedFollower" ref="followerModalEdit" :follower-data="selectedFollower"
                 v-model="shouldShowModal" @save="saveFollower" />
-            <div class="row row-cols-5 g-4 mb-4 gap-3">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 row-cols-lg-6 mb-4 gap-3">
                 <div v-for="follower in getPropertyCaseInsensitive(saveStore.saveData, 'Followers')" class="card"
                     style="width: 16rem;">
                     <div class="center-container">
                         <NuxtImg loading="eager" :src='constructFollowerPreviewUrl(follower, true)'
-                            class="card-img-top image-inner large-size" alt="Image not available" width="256"
-                            height="256" quality="100" fit="inside" />
+                            class="card-img-top image-inner small-size" alt="Image not available" width="64"
+                            height="64" quality="100" fit="inside" />
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">
+                        <p class="card-title h6">
                             {{ getPropertyCaseInsensitive(follower, 'Name') }}
-                        </h5>
+                        </p>
                         <p class="card-text">
-                            Level: <b>{{ getPropertyCaseInsensitive(follower, 'XPLevel') }}</b>
+                            Level: <span class="fw-bold">{{ getPropertyCaseInsensitive(follower, 'XPLevel') }}</span>
                         </p>
                         <div class="row">
                             <div class="col">
