@@ -1,7 +1,8 @@
 <template>
     <div v-if="saveStore.saveData">
         <div v-if="getPropertyCaseInsensitive(saveStore.saveData, 'Followers').length > 0">
-            <FollowerModalEdit v-if="selectedFollower" ref="followerModalEdit" :follower-data="selectedFollower" />
+            <FollowerModalEdit v-if="selectedFollower" ref="followerModalEdit" :follower-data="selectedFollower"
+                v-model="shouldShowModal" @save="saveFollower" />
             <div class="row row-cols-5 g-4 mb-4 gap-3">
                 <div v-for="follower in getPropertyCaseInsensitive(saveStore.saveData, 'Followers')" class="card"
                     style="width: 16rem;">
@@ -42,11 +43,15 @@
 <script setup lang="ts">
 import { constructFollowerPreviewUrl, getPropertyCaseInsensitive, setPropertyCaseInsensitive } from '~/utils/utility';
 import { useSaveData } from '~/stores/saveData';
+import type { Follower } from '~/types/save';
+import type { FollowerEditEvent } from '~/components/FollowerModalEdit.vue';
 
 const selectedFollower = ref<any>();
 const followerModalEdit = ref<HTMLElement & { modal: any | undefined }>();
+const shouldShowModal = ref(false);
+const saveStore = useSaveData();
 
-const editFollower = async (followerData: number) => {
+const editFollower = async (followerData: Follower) => {
     selectedFollower.value = followerData;
 
     await new Promise<void>(async (resolve) => {
@@ -56,7 +61,7 @@ const editFollower = async (followerData: number) => {
         resolve();
     });
 
-    followerModalEdit.value?.modal?.toggle();
+    shouldShowModal.value = true;
 }
 
 const deleteFollower = (id: number) => {
@@ -64,5 +69,25 @@ const deleteFollower = (id: number) => {
     setPropertyCaseInsensitive(saveStore.saveData, "Followers", getPropertyCaseInsensitive(saveStore.saveData, "Followers").filter((follower: any) => getPropertyCaseInsensitive(follower, "ID") === id));
 }
 
-const saveStore = useSaveData();
+const saveFollower = (followerData: FollowerEditEvent, oldID: number) => {
+    if (!saveStore.saveData) {
+        console.error("No save data found ?");
+        return;
+    }
+
+    const followers = getPropertyCaseInsensitive(saveStore.saveData, "Followers");
+    const index = followers.findIndex((follower: any) => getPropertyCaseInsensitive(follower, "ID") === oldID);
+    if (index === -1) {
+        console.error("Follower with ID " + oldID + " not found ?");
+        return;
+    }
+
+    // copy the follower data
+    for (const key in followerData) {
+        setPropertyCaseInsensitive(followers[index], key, followerData[key as keyof typeof followerData]);
+    }
+
+    saveStore.checkCultTraits(followerData.ID);
+}
+
 </script>

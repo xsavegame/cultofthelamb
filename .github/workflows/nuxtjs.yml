@@ -52,7 +52,7 @@ jobs:
           APP_ENV: github_pages
           NITRO_PRESET: github_pages
           NUXT_APP_BASE_URL: "/${{ github.event.repository.name }}/"
-        run: pnpm nuxt generate
+        run: pnpm generate
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

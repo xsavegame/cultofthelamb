@@ -65,3 +65,28 @@ footer {
   height: 80px;
   width: 50px;
 }
+
+.image-inner.img-trait {
+  background-color: black;
+}
+
+/* 
+  1. Use the same color as modal.
+  2. Ensure that the sticky layer is above the modal content.
+*/
+
+/* Header fixed to the top of the modal */
+.modal-header--sticky {
+  position: sticky;
+  top: 0;
+  background-color: inherit; /* [1] */
+  z-index: 1055; /* [2] */
+}
+
+/* Footer fixed to the bottom of the modal */
+.modal-footer--sticky {
+  position: sticky;
+  bottom: 0;
+  background-color: inherit; /* [1] */
+  z-index: 1055; /* [2] */
+}

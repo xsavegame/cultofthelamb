@@ -89,7 +89,9 @@
 </template>
 
 <script setup lang="ts">
+import type { JsonSaveFile } from '~/types/save';
 import { getPropertyCaseInsensitive, setPropertyCaseInsensitive } from '~/utils/utility';
+import { useSaveData } from '~/stores/saveData';
 
 type TraitData = {
     id: number;
@@ -99,11 +101,12 @@ type TraitData = {
 }
 
 const selectedTrait = ref<number[]>([]);
+const saveStore = useSaveData();
 
 const props = defineProps<{
     leftBranch: TraitData[];
     rightBranch: TraitData[];
-    saveData: any;
+    saveData: JsonSaveFile;
 }>();
 
 const updateClick = () => {
@@ -115,6 +118,8 @@ const updateClick = () => {
             setPropertyCaseInsensitive(props.saveData, "CultTraits",  cultTraits.filter(
                 (traitId: number) => traitId !== id
             ));
+
+            saveStore.checkCultTraits();
         }
     }
 

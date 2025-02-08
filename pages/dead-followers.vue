@@ -1,6 +1,6 @@
 <template>
     <div v-if="saveStore.saveData">
-        <div v-if="getPropertyCaseInsensitive(saveStore.saveData, 'Followers_Dead').length > 0">
+        <div v-if="getPropertyCaseInsensitive(saveStore.saveData, 'Followers_Dead')?.length > 0">
             <FollowerModalEdit v-if="selectedFollower" ref="followerModalEdit" :follower-data="selectedFollower"
                 :is-dead="true" />
             <div class="row row-cols-5 g-4 mb-4 gap-3">
@@ -26,7 +26,7 @@
                                 </button>
                             </div>
                             <div class="col text-end">
-                                <button type="button" class="btn btn-primary" @click="() => editFollower(follower)">
+                                <button type="button" class="btn btn-primary" @click="() => editFollower(follower as any)">
                                     Edit
                                 </button>
                             </div>
@@ -57,6 +57,7 @@ const selectedFollower = ref<any>();
 const followerModalEdit = ref<HTMLElement & { modal: any | undefined }>();
 
 const editFollower = async (followerData: number) => {
+    console.log('followerData = ', followerData);
     selectedFollower.value = followerData;
 
     await new Promise<void>(async (resolve) => {
@@ -71,7 +72,7 @@ const editFollower = async (followerData: number) => {
 
 const reviveFollower = async (id: number) => {
     if (!saveStore.saveData) return;
-    getPropertyCaseInsensitive(saveStore.saveData, "Followers").push(getPropertyCaseInsensitive(saveStore.saveData, "Followers_Dead").find((follower: any) => getPropertyCaseInsensitive(follower, "ID") === id));
+    getPropertyCaseInsensitive(saveStore.saveData, "Followers").push(getPropertyCaseInsensitive(saveStore.saveData, "Followers_Dead").find((follower: any) => getPropertyCaseInsensitive(follower, "ID") === id)!);
     deleteFollower(id);
 }
 

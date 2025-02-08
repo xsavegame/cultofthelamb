@@ -2,42 +2,67 @@
     <div ref="followerModalElement" class="modal fade show" tabindex="-1" aria-modal="true" role="dialog">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header modal-header--sticky">
                     <h5 class="modal-title">{{ getPropertyCaseInsensitive(props.followerData, "Name") }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
+                    <div class="row row-cols-1 row-cols-md-2 g-3">
                         <div class="col">
-                            <label>Follower ID:</label>
-                            <input v-model.number="id" type="number" class="form-control">
-                            <span class="text-danger fw-bold" style="font-size:14px;">Changing IDs is dangerous and can
-                                corrupt your save file, back up your save first.</span><br>
-                            <label>Follower Level:</label>
-                            <input v-model.number="xpLevel" type="number" class="form-control" min="0"><br>
-                            <label>Follower Age:</label>
-                            <input v-model.number="age" type="number" class="form-control" min="0"><br>
-                            <label>Follower Life Expectancy:</label>
-                            <input v-model.number="lifeExpectancy" type="number" class="form-control" min="0"><br>
+                            <label :for="makeFormId('ID')" class="form-label">Follower ID:</label>
+                            <input v-model.number="formData.ID" type="number" class="form-control"
+                                :id="makeFormId('ID')">
+                            <span class="text-danger fw-bold" style="font-size:14px;">Changing IDs is dangerous
+                                and can
+                                corrupt your save file, back up your save first.</span>
                         </div>
                         <div class="col">
-                            <label>Follower Name:</label>
-                            <input v-model.number="name" type="text" class="form-control"><br>
-                            <div class="pt-4"></div>
-                            <label>Day Joined:</label>
-                            <input v-model.number="dayJoined" type="number" class="form-control" min="0"><br>
-                            <label>Days in your Cult:</label>
-                            <input v-model.number="memberDuration" type="number" class="form-control" min="0"><br>
-                            <label>Sacrificial Value:</label>
-                            <input v-model.number="sacrificialValue" type="number" class="form-control" min="0"><br>
+                            <label :for="makeFormId('Name')" class="form-label">Follower Name:</label>
+                            <input v-model.number="formData.Name" type="text" class="form-control"
+                                :id="makeFormId('Name')">
                         </div>
+                        <div class="col">
+                            <label :for="makeFormId('XPLevel')" class="form-label">Follower Level:</label>
+                            <input v-model.number="formData.XPLevel" type="number" class="form-control" min="0" max="10"
+                                :id="makeFormId('XPLevel')">
+                        </div>
+                        <div class="col">
+                            <label :for="makeFormId('DayJoined')" class="form-label">Day Joined:</label>
+                            <input v-model.number="formData.DayJoined" type="number" class="form-control" min="0"
+                                :id="makeFormId('DayJoined')">
+                        </div>
+                        <div class="col">
+                            <label :for="makeFormId('Age')" class="form-label">Follower
+                                Age:</label>
+                            <input v-model.number="formData.Age" type="number" class="form-control" min="0"
+                                :id="makeFormId('Age')">
+
+                        </div>
+                        <div class="col">
+                            <label :for="makeFormId('MemberDuration')" class="form-label">Days in your Cult:</label>
+                            <input v-model.number="formData.MemberDuration" type="number" class="form-control" min="0"
+                                :id="makeFormId('MemberDuration')">
+                        </div>
+                        <div class="col">
+                            <label :for="makeFormId('LifeExpectancy')" class="form-label">Follower Life
+                                Expectancy:</label>
+                            <input v-model.number="formData.LifeExpectancy" type="number" class="form-control" min="0"
+                                :id="makeFormId('LifeExpectancy')">
+                        </div>
+                        <div class="col">
+                            <label :for="makeFormId('SacrificialValue')" class="form-label">Sacrificial
+                                Value:</label>
+                            <input v-model.number="formData.SacrificialValue" type="number" class="form-control" min="0"
+                                :id="makeFormId('SacrificialValue')">
+                        </div>
+
                     </div>
                     <hr>
-                    <div class="row">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3 mb-3">
                         <!-- TODO: Make this vfor -->
                         <div class="col">
                             <label>Follower Outfit:</label>
-                            <select v-model.number="outfit" class="form-select">
+                            <select v-model.number="formData.Outfit" class="form-select">
                                 <option value="0">Pre Indoctrination clothes</option>
                                 <option value="1">Mission Backpack</option>
                                 <option value="3">Indoctrinated Clothes</option>
@@ -47,17 +72,17 @@
                         </div>
                         <div v-if="followerSkinList" class="col">
                             <label>Follower Skin:</label>
-                            <select v-model.number="skinCharacter" class="form-select">
+                            <select v-model.number="formData.SkinCharacter" class="form-select">
                                 <option v-for="(followerSkin, index) of followerSkinList" :value="index">{{
                                     followerSkin.name
-                                }}</option>
+                                    }}</option>
                             </select>
                         </div>
                         <div v-if="followerSkinList" class="col">
                             <label>Follower Variant:</label>
-                            <select v-model.number="skinVariation" class="form-select">
+                            <select v-model.number="formData.SkinCharacter" class="form-select">
                                 <option
-                                    v-for="(unused, index) of followerSkinList[getPropertyCaseInsensitive(props.followerData, 'SkinCharacter')]?.variant ?? []"
+                                    v-for="(_, index) of followerSkinList[getPropertyCaseInsensitive(props.followerData, 'SkinCharacter')]?.variant ?? []"
                                     :value="index">{{
                                         index === 0 ? "Default" : index
                                     }}</option>
@@ -66,7 +91,7 @@
                         <!-- TODO: Make this vfor -->
                         <div class="col">
                             <label>Follower Necklace: </label>
-                            <select v-model.number="necklace" class="form-select">
+                            <select v-model.number="formData.Necklace" class="form-select">
                                 <option value="0">None</option>
                                 <option value="45">Flower Necklace</option>
                                 <option value="46">Feather Necklace</option>
@@ -80,17 +105,20 @@
                     <div class="row">
                         <label>Follower Attribute: </label>
                         <div class="col">
-                            <input v-model="isStarving" type="checkbox" class="form-check-input" id="stravingIndicator">
+                            <input v-model="formData.IsStarving" type="checkbox" class="form-check-input"
+                                id="stravingIndicator">
                             <label class="form-check-label" for="stravingIndicator">&nbsp;Starving Indicator</label><br>
-                            <input v-model="marriedToLeader" type="checkbox" class="form-check-input"
+                            <input v-model="formData.MarriedToLeader" type="checkbox" class="form-check-input"
                                 id="marriedToLeader">
                             <label class="form-check-label" for="marriedToLeader">&nbsp;Married to
                                 Leader</label><br>
                         </div>
                         <div class="col">
-                            <input v-model="taxEnforcer" type="checkbox" class="form-check-input" id="taxEnforcer">
+                            <input v-model="formData.TaxEnforcer" type="checkbox" class="form-check-input"
+                                id="taxEnforcer">
                             <label class="form-check-label" for="taxEnforcer">&nbsp;Tax Enforcer</label><br>
-                            <input v-model="faithEnforcer" type="checkbox" class="form-check-input" id="faithEnforcer">
+                            <input v-model="formData.FaithEnforcer" type="checkbox" class="form-check-input"
+                                id="faithEnforcer">
                             <label class="form-check-label" for="faithEnforcer">&nbsp;Faith Enforcer</label><br>
                         </div>
                     </div>
@@ -104,8 +132,13 @@
                         </div>
                     </div>
                     <hr />
-                    <div class="row">
-                        <div class="col-6 offset-6 mb-3">
+                    <div class="row row-cols-1 row-cols-md-2 g-3 mb-3">
+                        <div class="col">
+                            You selected <span class="text-success"><span class="fw-bold">{{ totalPositiveTraits
+                                    }}</span> positive trait(s)</span>, and <span class="text-danger"><span
+                                    class="fw-bold">{{ totalNegativeTraits }}</span> negative trait(s)</span>.
+                        </div>
+                        <div class="col">
                             <input type="text" placeholder="Search..." class="form-control" v-model="serachTrait">
                         </div>
                     </div>
@@ -122,16 +155,29 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="trait in followerTraitListFiltered">
-                                        <td class="col-1">
-                                            <input v-model="traits" type="checkbox" class="form-check-input"
-                                                :value="trait.id">
+                                    <tr v-if="['idle', 'pending', 'error'].includes(followerTraitLoading)">
+                                        <td colspan="5" class="text-center">
+                                            <div v-if="followerTraitLoading === 'error'">
+                                                There was an error loading the follower traits
+                                            </div>
+                                            <div v-else class="spinner-border text-primary" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                            </div>
+
                                         </td>
-                                        <td class="col-1" style="background-color:black;">
+                                    </tr>
+                                    <tr v-else v-for="trait in followerTraitListFiltered"
+                                        :class="{ 'table-warning': trait.cultTrait }">
+                                        <td class="col-1">
+                                            <input v-model="formData.Traits" type="checkbox" class="form-check-input"
+                                                :value="trait.id" :disabled="currentCultTraits?.includes(trait.id)">
+                                        </td>
+                                        <td class="col-1">
                                             <div class="center-container">
                                                 <NuxtImg loading="eager" :src="trait.image"
-                                                    class="image-inner small-size" alt="Image not available" width="64"
-                                                    height="64" quality="100" fit="inside" :title="trait.name" />
+                                                    class="image-inner small-size img-trait" alt="Image not available"
+                                                    width="64" height="64" quality="100" fit="inside"
+                                                    :title="trait.name" />
                                             </div>
                                         </td>
                                         <td class="col-1">
@@ -143,7 +189,10 @@
                                             {{ trait.name }}
                                         </td>
                                         <td class="col">
-                                            {{ trait.description }}
+                                            <p>{{ trait.description }}</p>
+                                            <p v-if="trait.cultTrait" class="fw-bold">This should be disable if thecult trait is enabled</p>
+                                            <p v-if="currentCultTraits?.includes(trait.id)" class="text-danger fw-bold">
+                                                This trait is currently disabled as it conflicts with a cult trait</p>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -154,43 +203,50 @@
                     <div class="row">
                         <div class="col">
                             <label>Adoration (XP to next level): </label>
-                            <input v-model.number="adoration" type="range" class="form-range" min="0" max="100"
+                            <input v-model.number="formData.Adoration" type="range" class="form-range" min="0" max="100"
                                 step="1">
-                            <p>{{ adoration }}</p>
+                            <p>{{ formData.Adoration }}</p>
                             <label>Faith: </label>
-                            <input v-model.number="faith" type="range" class="form-range" min="0" max="100" step="1">
-                            <p>{{ faith }}</p>
-                            <label>Happiness: </label>
-                            <input v-model.number="happiness" type="range" class="form-range" min="0" max="100"
+                            <input v-model.number="formData.Faith" type="range" class="form-range" min="0" max="100"
                                 step="1">
-                            <p>{{ happiness }}</p>
+                            <p>{{ formData.Faith }}</p>
+                            <label>Happiness: </label>
+                            <input v-model.number="formData.Happiness" type="range" class="form-range" min="0" max="100"
+                                step="1">
+                            <p>{{ formData.Happiness }}</p>
                             <label>Illness: </label>
-                            <input v-model.number="illness" type="range" class="form-range" min="0" max="100"
+                            <input v-model.number="formData.Illness" type="range" class="form-range" min="0" max="100"
                                 step="1" />
-                            <p>{{ illness }}</p>
+                            <p>{{ formData.Illness }}</p>
                             <label>Reeducation: </label>
-                            <input v-model.number="reeducation" type="range" class="form-range" min="0" max="100"
-                                step="1" />
-                            <p>{{ reeducation }}</p>
+                            <input v-model.number="formData.Reeducation" type="range" class="form-range" min="0"
+                                max="100" step="1" />
+                            <p>{{ formData.Reeducation }}</p>
                         </div>
                         <div class="col">
                             <label>Exhaustion: </label>
-                            <input v-model.number="exhaustion" type="range" class="form-range" min="0" max="100"
-                                step="1" />
-                            <p>{{ exhaustion }}</p>
+                            <input v-model.number="formData.Exhaustion" type="range" class="form-range" min="0"
+                                max="100" step="1" />
+                            <p>{{ formData.Exhaustion }}</p>
                             <label>Rest: </label>
-                            <input v-model.number="rest" type="range" class="form-range" min="0" max="100" step="1" />
-                            <p>{{ rest }}</p>
+                            <input v-model.number="formData.Rest" type="range" class="form-range" min="0" max="100"
+                                step="1" />
+                            <p>{{ formData.Rest }}</p>
                             <label>Starvation: </label>
-                            <input v-model.number="starvation" type="range" class="form-range" min="0" max="75"
+                            <input v-model.number="formData.Starvation" type="range" class="form-range" min="0" max="75"
                                 step="1" />
-                            <p>{{ starvation }}</p>
+                            <p>{{ formData.Starvation }}</p>
                             <label>Satiation: </label>
-                            <input v-model.number="satiation" type="range" class="form-range" min="0" max="100"
+                            <input v-model.number="formData.Satiation" type="range" class="form-range" min="0" max="100"
                                 step="1" />
-                            <p>{{ satiation }}</p>
+                            <p>{{ formData.Satiation }}</p>
                         </div>
                     </div>
+                </div>
+                <div class="modal-footer modal-footer--sticky">
+                    <button type="button" class="btn btn-success" v-show="isChanged" @click="save">Save changes</button>
+                    <button type="button" class="btn btn-warning" v-show="isChanged" @click="reset">Reset</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -198,17 +254,52 @@
 </template>
 
 <script setup lang="ts">
-import { constructFollowerPreviewUrl, getPropertyCaseInsensitive, setPropertyCaseInsensitive, generateObjectInsensitiveComputed } from '~/utils/utility';
+import { constructFollowerPreviewUrl, getPropertyCaseInsensitive, setPropertyCaseInsensitive } from '~/utils/utility';
 import { Modal } from "bootstrap";
+import type { Follower, JsonSaveFile } from '~/types/save';
+import isEqual from 'lodash/isEqual';
+import cloneDeep from 'lodash/cloneDeep';
 
+const showModal = defineModel<boolean>();
 const followerModalElement = ref<HTMLElement>();
 const followerModal = ref<Modal>();
 const serachTrait = ref("");
+const dataStore = useSaveData();
 
-const { data: followerTraitList } = useFetch<{ id: number, image: string, effect: "Positive" | "Negative", name: string, description: string }[]>("/data/followerTrait.json");
+type FollowerTrait = {
+    id: number;
+    image: string;
+    effect: "Positive" | "Negative";
+    name: string;
+    description: string;
+}
+
+const { data: followerTraitList, status: followerTraitLoading } = useFetch<FollowerTrait[]>("/data/followerTrait.json");
 const { data: followerSkinList } = useFetch<{ name: string; variant: string[]; }[]>("/data/followerSkin.json");
-const sortedTraits = computed(() => {
-    const traits = followerTraitList.value ?? [];
+const { data: traitData } = useFetch<Array<{ name: string, leftBranch: Array<{ id: number }>, rightBranch: Array<{ id: number }> }>>("/data/traitData.json");
+
+const allCultTraits = computed(() => {
+    const traits = new Set<number>();
+
+    traitData.value?.forEach(trait => {
+        trait.leftBranch?.forEach(trait => traits.add(trait.id));
+        trait.rightBranch?.forEach(trait => traits.add(trait.id));
+    });
+
+    return Array.from(traits);
+});
+
+const currentCultTraits = computed(() => {
+    return getPropertyCaseInsensitive(dataStore.saveData, "CultTraits");
+});
+
+const allFollowerTraits = computed(() => {
+    const traits: Array<FollowerTrait & { cultTrait?: boolean }> = followerTraitList.value ?? [];
+
+
+    traits.forEach(trait => {
+        trait.cultTrait = allCultTraits.value.includes(trait.id);
+    });
 
     return traits.sort((a, b) => {
         // sort by effect, positive first
@@ -223,43 +314,75 @@ const sortedTraits = computed(() => {
     });
 });
 
-const followerTraitListFiltered = computed(() =>  {
-    const filtered = sortedTraits.value.filter(trait => trait.name.toLowerCase().includes(serachTrait.value.toLowerCase()));
+const followerTraitListFiltered = computed(() => {
+    const filtered = allFollowerTraits.value.filter(trait => {
+        if (trait.name.toLowerCase().includes(serachTrait.value.toLowerCase())) {
+            return true;
+        }
+
+        return trait.description.toLowerCase().includes(serachTrait.value.toLowerCase());
+    });
+
     return filtered;
 });
 
-const props = defineProps<{ followerData: any, isDead?: boolean }>();
+const props = defineProps<{ followerData: Follower, isDead?: boolean }>();
 
-const id = generateObjectInsensitiveComputed(() => props.followerData, "ID");
-const xpLevel = generateObjectInsensitiveComputed(() => props.followerData, "XPLevel");
-const age = generateObjectInsensitiveComputed(() => props.followerData, "Age");
-const lifeExpectancy = generateObjectInsensitiveComputed(() => props.followerData, "LifeExpectancy");
-const name = generateObjectInsensitiveComputed(() => props.followerData, "Name");
-const dayJoined = generateObjectInsensitiveComputed(() => props.followerData, "DayJoined");
-const memberDuration = generateObjectInsensitiveComputed(() => props.followerData, "MemberDuration");
-const sacrificialValue = generateObjectInsensitiveComputed(() => props.followerData, "SacrificialValue");
+const makeFormId = (name: string) => `follower-modal-edit-${name}-${props.followerData.ID}`;
 
-const outfit = generateObjectInsensitiveComputed(() => props.followerData, "Outfit");
-const skinCharacter = generateObjectInsensitiveComputed(() => props.followerData, "SkinCharacter");
-const skinVariation = generateObjectInsensitiveComputed(() => props.followerData, "SkinVariation");
-const necklace = generateObjectInsensitiveComputed(() => props.followerData, "Necklace");
+// copy from props
+const formData = ref({
+    ID: props.followerData.ID,
+    XPLevel: props.followerData.XPLevel,
+    Age: props.followerData.Age,
+    LifeExpectancy: props.followerData.LifeExpectancy,
+    Name: props.followerData.Name,
+    DayJoined: props.followerData.DayJoined,
+    MemberDuration: props.followerData.MemberDuration,
+    SacrificialValue: props.followerData.SacrificialValue,
+    Outfit: props.followerData.Outfit,
+    SkinCharacter: props.followerData.SkinCharacter,
+    SkinVariation: props.followerData.SkinVariation,
+    Necklace: props.followerData.Necklace,
+    IsStarving: props.followerData.IsStarving,
+    MarriedToLeader: props.followerData.MarriedToLeader,
+    TaxEnforcer: props.followerData.TaxEnforcer,
+    FaithEnforcer: props.followerData.FaithEnforcer,
+    Traits: Array.from(props.followerData.Traits),
+    Adoration: props.followerData.Adoration,
+    Faith: props.followerData.Faith,
+    Happiness: props.followerData.Happiness,
+    Illness: props.followerData.Illness,
+    Reeducation: props.followerData.Reeducation,
+    Exhaustion: props.followerData.Exhaustion,
+    Rest: props.followerData.Rest,
+    Starvation: props.followerData.Starvation,
+    Satiation: props.followerData.Satiation,
+});
 
-const isStarving = generateObjectInsensitiveComputed(() => props.followerData, "IsStarving");
-const marriedToLeader = generateObjectInsensitiveComputed(() => props.followerData, "MarriedToLeader");
-const taxEnforcer = generateObjectInsensitiveComputed(() => props.followerData, "TaxEnforcer");
-const faithEnforcer = generateObjectInsensitiveComputed(() => props.followerData, "FaithEnforcer");
+const totalPositiveTraits = computed(() => {
+    return formData.value.Traits.filter(traitID => followerTraitList.value?.find(trait => trait.id === traitID)?.effect === "Positive").length;
+});
 
-const traits = generateObjectInsensitiveComputed(() => props.followerData, "Traits");
+const totalNegativeTraits = computed(() => {
+    return formData.value.Traits.filter(traitID => followerTraitList.value?.find(trait => trait.id === traitID)?.effect === "Negative").length;
+});
 
-const adoration = generateObjectInsensitiveComputed(() => props.followerData, "Adoration");
-const faith = generateObjectInsensitiveComputed(() => props.followerData, "Faith");
-const happiness = generateObjectInsensitiveComputed(() => props.followerData, "Happiness");
-const illness = generateObjectInsensitiveComputed(() => props.followerData, "Illness");
-const reeducation = generateObjectInsensitiveComputed(() => props.followerData, "Reeducation");
-const exhaustion = generateObjectInsensitiveComputed(() => props.followerData, "Exhaustion");
-const rest = generateObjectInsensitiveComputed(() => props.followerData, "Rest");
-const starvation = generateObjectInsensitiveComputed(() => props.followerData, "Starvation");
-const satiation = generateObjectInsensitiveComputed(() => props.followerData, "Satiation");
+const reset = () => {
+    for (const key of Object.keys(formData.value) as Array<keyof typeof formData.value>) {
+        Reflect.set(formData.value, key, cloneDeep(props.followerData[key]));
+    }
+};
+
+const isChanged = computed(() => {
+    for (const [key, value] of Object.entries(formData.value)) {
+        if (!isEqual(value, getPropertyCaseInsensitive(props.followerData, key))) {
+            return true;
+        }
+    }
+
+    return false;
+});
 
 onMounted(() => {
     if (!followerModalElement.value) return;
@@ -267,10 +390,16 @@ onMounted(() => {
     followerModal.value = new Modal(followerModalElement.value, {
         keyboard: false
     });
+
+    followerModalElement.value.addEventListener("show.bs.modal", () => showModal.value = true);
+    followerModalElement.value.addEventListener("hide.bs.modal", () => showModal.value = false);
 });
 
 const updateSkin = () => {
-    if (!followerSkinList.value) return;
+    if (!followerSkinList.value) {
+        return;
+    }
+
     let skinName = followerSkinList.value[getPropertyCaseInsensitive(props.followerData, "SkinCharacter")]?.variant[getPropertyCaseInsensitive(props.followerData, "SkinVariation")];
     if (!skinName) {
         props.followerData.SkinVariation = 0;
@@ -279,10 +408,29 @@ const updateSkin = () => {
     setPropertyCaseInsensitive(props.followerData, "SkinName", skinName);
 }
 
+type RefData<T> = T extends Ref<infer U> ? U : T;
+export type FollowerEditEvent = RefData<typeof formData>;
+
+const saveEvent = defineEmits<{ save: [FollowerEditEvent, number] }>();
+
+const save = () => {
+    saveEvent("save", cloneDeep(formData.value), props.followerData.ID);
+    showModal.value = false;
+}
+
 watch(() => getPropertyCaseInsensitive(props.followerData, "SkinCharacter"), updateSkin);
 watch(() => getPropertyCaseInsensitive(props.followerData, "SkinVariation"), updateSkin);
+watch(() => props.followerData, () => reset());
+watch(showModal, (newValue) => {
+    if (newValue) {
+        followerModal.value?.show();
+    } else {
+        followerModal.value?.hide();
+    }
+});
 
 defineExpose({
     modal: followerModal
 });
+
 </script>

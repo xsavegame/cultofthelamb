@@ -43,7 +43,7 @@ const itemQuantity = (id: number) => getPropertyCaseInsensitive(saveStore.saveDa
 const setItemQuantity = (id: number, quantity: number) => {
     if (!saveStore.saveData) return;
 
-    setPropertyCaseInsensitive(saveStore.saveData, "items", getPropertyCaseInsensitive(saveStore.saveData, "items")?.filter((item: any) => item.quantity > 0 && ((quantity <= 0 && item.type !== id) || quantity > 0)));
+    setPropertyCaseInsensitive(saveStore.saveData, "items", getPropertyCaseInsensitive(saveStore.saveData, "items")?.filter((item) => item.quantity > 0 && ((quantity <= 0 && item.type !== id) || quantity > 0)));
     if (quantity <= 0) return;
 
     const item = getPropertyCaseInsensitive(saveStore.saveData, "items")?.find((item: any) => item.type === id);

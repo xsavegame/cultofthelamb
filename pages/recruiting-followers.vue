@@ -25,7 +25,7 @@
                                 </button>
                             </div>
                             <div class="col text-end">
-                                <button type="button" class="btn btn-primary" @click="() => editFollower(follower)">
+                                <button type="button" class="btn btn-primary" @click="() => editFollower(follower as any)">
                                     Edit
                                 </button>
                             </div>
