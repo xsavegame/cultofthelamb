@@ -69,7 +69,7 @@
                         <div v-if="followerSkinList" class="col">
                             <label :for="makeFormId('SkinCharacter')">Follower Skin:</label>
                             <select v-model.number="formData.SkinCharacter" class="form-select"
-                                :id="makeFormId('SkinCharacter')">
+                                :id="makeFormId('SkinCharacter')" :disabled="isRestrictedSkin">
                                 <option v-for="(followerSkin, index) of followerSkinList" :value="index"
                                     :key="`SkinCharacter-${formData.ID}-${index}`">{{
                                         followerSkin.name
@@ -79,7 +79,7 @@
                         <div v-if="followerSkinList" class="col">
                             <label :for="makeFormId('SkinVariation')">Follower Variant:</label>
                             <select v-model.number="formData.SkinVariation" class="form-select"
-                                :id="makeFormId('SkinVariation')">
+                                :id="makeFormId('SkinVariation')" :disabled="isRestrictedSkin">
                                 <option v-for="(name, index) of followerSkinList[formData.SkinCharacter]?.variant ?? []"
                                     :value="index" :key="`SkinVariation-${formData.ID}-${index}`">{{ name }}</option>
                             </select>
@@ -135,6 +135,21 @@
                     </div>
                     <div class="row">
                         <div class="col">
+                            <div class="alert alert-warning" role="alert">
+                                <p>A trait with a <span class="fw-bold">warning</span> background is restricted, please
+                                    use
+                                    it with caution.</p>
+                                <div class="form-group">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" v-model="showRestrictedTraits" class="form-check-input">
+                                        Show restricted traits
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
                             <table class="table table-striped">
                                 <thead class="thead-dark">
                                     <tr>
@@ -154,39 +169,51 @@
                                             <div v-else class="spinner-border text-primary" role="status">
                                                 <span class="visually-hidden">Loading...</span>
                                             </div>
+                                        </td>
+                                    </tr>
+                                    <template v-else v-for="trait in followerTraitListFiltered"
+                                        :key="`Trait-${props.followerData.ID}-${trait.id}`">
+                                        <tr :class="{ 'table-warning': trait.cultTrait || trait.restricted }"
+                                            v-if="showRestrictedTraits || !(trait.restricted || trait.cultTrait)">
+                                            <td class="col-1 text-center align-middle">
+                                                <input v-model="formData.Traits" type="checkbox"
+                                                    class="form-check-input" :value="trait.id"
+                                                    :disabled="currentCultTraits?.includes(trait.id)"
+                                                    :aria-labelledby="makeFormId(`Trait-${trait.id}`)">
+                                            </td>
+                                            <td class="col-1">
+                                                <div class="center-container">
+                                                    <NuxtImg loading="eager" :src="trait.image"
+                                                        class="image-inner small-size img-trait"
+                                                        alt="Image not available" width="64" height="64" quality="100"
+                                                        fit="inside" :title="trait.name" />
+                                                </div>
+                                            </td>
+                                            <td class="col-1">
+                                                <span
+                                                    :class="{ 'text-success': trait.effect === 'Positive', 'text-danger': trait.effect === 'Negative', 'fw-bold': true }">
+                                                    {{ trait.effect }}
+                                                </span>
+                                            </td>
+                                            <td class="col">
+                                                <span :id="makeFormId(`Trait-${trait.id}`)">{{ trait.name }}</span>
 
-                                        </td>
-                                    </tr>
-                                    <tr v-else v-for="trait in followerTraitListFiltered"
-                                        :class="{ 'table-warning': trait.cultTrait }">
-                                        <td class="col-1">
-                                            <input v-model="formData.Traits" type="checkbox" class="form-check-input"
-                                                :value="trait.id" :disabled="currentCultTraits?.includes(trait.id)">
-                                        </td>
-                                        <td class="col-1">
-                                            <div class="center-container">
-                                                <NuxtImg loading="eager" :src="trait.image"
-                                                    class="image-inner small-size img-trait" alt="Image not available"
-                                                    width="64" height="64" quality="100" fit="inside"
-                                                    :title="trait.name" />
-                                            </div>
-                                        </td>
-                                        <td class="col-1">
-                                            <span v-if="trait.effect === 'Positive'"
-                                                class="text-success">Positive</span>
-                                            <span v-else class="text-danger">Negative</span>
-                                        </td>
-                                        <td class="col">
-                                            {{ trait.name }}
-                                        </td>
-                                        <td class="col">
-                                            <p>{{ trait.description }}</p>
-                                            <p v-if="trait.cultTrait" class="fw-bold">This should be disable if thecult
-                                                trait is enabled</p>
-                                            <p v-if="currentCultTraits?.includes(trait.id)" class="text-danger fw-bold">
-                                                This trait is currently disabled as it conflicts with a cult trait</p>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                            <td class="col">
+                                                <p>{{ trait.description }}</p>
+                                                <p v-if="currentCultTraits?.includes(trait.id)"
+                                                    class="text-danger fw-bold">
+                                                    This trait is currently disabled as it conflicts with a cult trait
+                                                </p>
+                                                <p v-else-if="trait.cultTrait" class="fw-bold">This should be disable if
+                                                    thecult
+                                                    trait is enabled</p>
+                                                <p v-if="trait.restrictedReason" class="text-danger fw-bold">
+                                                    {{ trait.restrictedReason }}
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </template>
                                 </tbody>
                             </table>
                         </div>
@@ -246,9 +273,9 @@
 </template>
 
 <script setup lang="ts">
-import { constructFollowerPreviewUrl, getPropertyCaseInsensitive, setPropertyCaseInsensitive } from '~/utils/utility';
+import { constructFollowerPreviewUrl, getPropertyCaseInsensitive } from '~/utils/utility';
 import { Modal } from "bootstrap";
-import type { Follower, JsonSaveFile } from '~/types/save';
+import type { Follower } from '~/types/save';
 import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 
@@ -256,6 +283,18 @@ const showModal = defineModel<boolean>();
 const followerModalElement = ref<HTMLElement>();
 const followerModal = ref<Modal>();
 const serachTrait = ref("");
+const showRestrictedTraits = ref(false);
+const restrictedSkinName = ref([
+    "Boss Death Cat",
+    "Boss Baal",
+    "Boss Aym",
+    /CultLeader/i,
+    "Leshy",
+    "Heket",
+    "Kallamar",
+    "Shamura",
+]);
+
 const dataStore = useSaveData();
 
 type FollowerTrait = {
@@ -264,6 +303,8 @@ type FollowerTrait = {
     effect: "Positive" | "Negative";
     name: string;
     description: string;
+    restricted?: boolean;
+    restrictedReason?: string;
 }
 
 const { data: followerTraitList, status: followerTraitLoading } = useFetch<FollowerTrait[]>("/data/followerTrait.json");
@@ -303,6 +344,16 @@ const formData = ref({
     Rest: props.followerData.Rest,
     Starvation: props.followerData.Starvation,
     Satiation: props.followerData.Satiation,
+});
+
+const isRestrictedSkin = computed(() => {
+    return restrictedSkinName.value.some(name => {
+        if (typeof name === "string") {
+            return formData.value.SkinName.includes(name);
+        }
+
+        return name.test(formData.value.SkinName);
+    });
 });
 
 const allCultTraits = computed(() => {
@@ -392,6 +443,10 @@ onMounted(() => {
 
 const updateSkin = () => {
     if (!followerSkinList.value) {
+        return;
+    }
+
+    if (formData.value.SkinName.includes('Boss')) {
         return;
     }
 

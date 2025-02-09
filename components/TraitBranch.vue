@@ -18,9 +18,7 @@
                         <tbody>
                             <tr v-for="(traitData, index) in props.leftBranch">
                                 <td class="col">
-                                    <input type="checkbox" class="form-check-input"
-                                        :checked="selectedTrait[index] === 1"
-                                        @click="() => { selectedTrait[index] = selectedTrait[index] === 1 ? null as any : 1; updateClick(); }">
+                                    <input type="checkbox" class="form-check-input" :value="traitData.id" v-model="currentCultTraits">
                                 </td>
                                 <td class="col" style="background-color:black;">
                                     <div class="center-container">
@@ -31,12 +29,12 @@
                                 </td>
                                 <td class="col">
                                     <label class="form-check-label" :for="`CultTraits_${traitData.id}`">{{
-                                            traitData.name
+                                        traitData.name
                                     }}</label>
                                 </td>
                                 <td class="col">
                                     <label class="form-check-label" :for="`CultTraits_${traitData.id}`">{{
-                                            traitData.description
+                                        traitData.description
                                     }}</label>
                                 </td>
                             </tr>
@@ -58,9 +56,7 @@
                         <tbody>
                             <tr v-for="(traitData, index) in props.rightBranch">
                                 <td class="col">
-                                    <input type="checkbox" class="form-check-input"
-                                        :checked="selectedTrait[index] === 2"
-                                        @click="() => { selectedTrait[index] = selectedTrait[index] === 2 ? null as any : 2; updateClick(); }">
+                                    <input type="checkbox" class="form-check-input" :value="traitData.id" v-model="currentCultTraits">
                                 </td>
                                 <td class="col" style="background-color:black;">
                                     <div class="center-container">
@@ -71,12 +67,12 @@
                                 </td>
                                 <td class="col">
                                     <label class="form-check-label" :for="`CultTraits_${traitData.id}`">{{
-                                            traitData.name
+                                        traitData.name
                                     }}</label>
                                 </td>
                                 <td class="col">
                                     <label class="form-check-label" :for="`CultTraits_${traitData.id}`">{{
-                                            traitData.description
+                                        traitData.description
                                     }}</label>
                                 </td>
                             </tr>
@@ -109,47 +105,50 @@ const props = defineProps<{
     saveData: JsonSaveFile;
 }>();
 
-const updateClick = () => {
-    const checkTrait = (id: number, value: boolean) => {
-        const cultTraits = getPropertyCaseInsensitive(props.saveData, "CultTraits");
+const currentCultTraits = generateObjectInsensitiveComputed(() => saveStore.saveData, "CultTraits");
 
-        if (value && cultTraits) cultTraits.push(id);
-        else if (!value) {
-            setPropertyCaseInsensitive(props.saveData, "CultTraits",  cultTraits.filter(
-                (traitId: number) => traitId !== id
-            ));
+// const updateClick = () => {
+//     const checkTrait = (id: number, value: boolean) => {
 
-            saveStore.checkCultTraits();
-        }
-    }
+//         const cultTraits = getPropertyCaseInsensitive(props.saveData, "CultTraits");
 
-    for (const [index, value] of selectedTrait.value.entries()) {
-        if (props.leftBranch[index]) checkTrait(props.leftBranch[index].id, value === 1);
-        if (props.rightBranch[index]) checkTrait(props.rightBranch[index].id, value === 2);
-    }
-}
+//         if (value && cultTraits) cultTraits.push(id);
+//         else if (!value) {
+//             setPropertyCaseInsensitive(props.saveData, "CultTraits", cultTraits.filter(
+//                 (traitId: number) => traitId !== id
+//             ));
 
-const updateSelected = () => {
-    if (props.saveData) {
-        const checkBranch = (traits: TraitData[], value: number) => {
-            const cultTraits = getPropertyCaseInsensitive(props.saveData, "CultTraits");
+//             saveStore.checkCultTraits();
+//         }
+//     }
 
-            for (const [index, trait] of traits.entries())
-                if (cultTraits.includes(trait.id))
-                    selectedTrait.value[index] = value;
-        }
+//     for (const [index, value] of selectedTrait.value.entries()) {
+//         if (props.leftBranch[index]) checkTrait(props.leftBranch[index].id, value === 1);
+//         if (props.rightBranch[index]) checkTrait(props.rightBranch[index].id, value === 2);
+//     }
+// }
 
-        selectedTrait.value = [];
-        checkBranch(props.leftBranch, 1);
-        checkBranch(props.rightBranch, 2);
-    }
-}
+// const updateSelected = () => {
+//     if (props.saveData) {
+//         const checkBranch = (traits: TraitData[], value: number) => {
+//             const cultTraits = getPropertyCaseInsensitive(props.saveData, "CultTraits");
 
-watch(() => props.leftBranch, updateSelected);
-watch(() => props.rightBranch, updateSelected);
-watch(() => props.saveData, updateSelected);
+//             for (const [index, trait] of traits.entries())
+//                 if (cultTraits.includes(trait.id))
+//                     selectedTrait.value[index] = value;
+//         }
 
-onMounted(() => {
-    updateSelected();
-})
+//         selectedTrait.value = [];
+//         checkBranch(props.leftBranch, 1);
+//         checkBranch(props.rightBranch, 2);
+//     }
+// }
+
+// watch(() => props.leftBranch, updateSelected);
+// watch(() => props.rightBranch, updateSelected);
+// watch(() => props.saveData, updateSelected);
+
+// onMounted(() => {
+//     updateSelected();
+// })
 </script>

@@ -1,10 +1,74 @@
 [
   {
+    "id": 1,
+    "image": "/Traits/1.png",
+    "effect": "Negative",
+    "name": "Natural Skeptic",
+    "description": "On recruiting Follower immediately lose 10 Faith."
+  },
+  {
     "id": 2,
     "image": "/Traits/2.png",
     "effect": "Positive",
     "name": "Naturally Obedient",
     "description": "On recruiting this Follower immediately gain 10 Faith."
+  },
+  {
+    "id": 3,
+    "image": "/Traits/3.png",
+    "name": "Belief in Afterlife",
+    "description": "Death is not the end. When a Follower dies only lose -5 faith instead of -20.",
+    "restricted": true
+  },
+  {
+    "id": 4,
+    "image": "/Traits/4.png",
+    "effect": "Negative",
+    "name": "Terrified of Death",
+    "description": "Lose -5 Faith whenever another Follower dies."
+  },
+  {
+    "id": 5,
+    "image": "/Traits/5.png",
+    "effect": "Positive",
+    "name": "Cannibal",
+    "description": "+5 Faith and no chance of sickness when eating Minced Follower Meat. No faith lost when Followers saw you butchered corpses."
+  },
+  {
+    "id": 6,
+    "image": "/Traits/6.png",
+    "effect": "Positive",
+    "name": "Grass Eater",
+    "description": "No negative Faith when a Follower eats Grassy Gruel, and no chance of sickness."
+  },
+  {
+    "id": 7,
+    "image": "/Traits/7.png",
+    "effect": "Positive",
+    "name": "Belief in Original Sin",
+    "description": "-2 Faith instead of -15 when putting a Follower in Prison who is not dissenting."
+  },
+  {
+    "id": 8,
+    "image": "/Traits/8.png",
+    "effect": "Positive",
+    "name": "Belief in Absolution",
+    "description": "Every day that begins without anyone in prison, gain +10 Faith."
+  },
+  {
+    "id": 9,
+    "image": "/Traits/9.png",
+    "effect": "Positive",
+    "name": "Belief in Sacrifice",
+    "description": "+20 Faith when Sacrifice of the Flesh is performed. Followers when ascended drop Bone and Follower Meat.",
+    "restricted": true
+  },
+  {
+    "id": 10,
+    "image": "/Traits/10.png",
+    "effect": "Negative",
+    "name": "Against Sacrifice",
+    "description": "-5 Faith when a Follower is Sacrificed."
   },
   {
     "id": 11,
@@ -14,11 +78,34 @@
     "description": "Generates Devotion 15% faster. Mutually exclusive with Faithless. "
   },
   {
+    "id": 12,
+    "image": "/Traits/12.png",
+    "effect": "Negative",
+    "name": "Faithless",
+    "description": "Generates Devotion 15% slower."
+  },
+  {
+    "id": 13,
+    "image": "/Traits/13.png",
+    "effect": "Negative",
+    "name": "Fear of the Sick",
+    "description": "-5 Faith when another Cult member becomes sick.",
+    "restricted": true,
+    "restrictedReason": "Max 1"
+  },
+  {
     "id": 14,
     "image": "/Traits/12.png",
     "effect": "Positive",
-    "name": "Faithless",
+    "name": "Believes Illness is Divine Punishment",
     "description": "Gain 5 Faith when another Cult member becomes ill. Note: Max 1"
+  },
+  {
+    "id": 15,
+    "image": "/Traits/15.png",
+    "effect": "Negative",
+    "name": "Sickly",
+    "description": "Heals 15% slower when sick and in bed rest."
   },
   {
     "id": 16,
@@ -42,6 +129,20 @@
     "description": "Gain Faith when building better sleeping quarters."
   },
   {
+    "id": 19,
+    "image": "/Traits/19.png",
+    "effect": "Positive",
+    "name": "False Idols",
+    "description": "Gain +7 Faith instead of +4 when placing a decoration building."
+  },
+  {
+    "id": 20,
+    "image": "/Traits/20.png",
+    "effect": "Negative",
+    "name": "Cynical",
+    "description": "15% harder to level up."
+  },
+  {
     "id": 21,
     "image": "/Traits/21.png",
     "effect": "Positive",
@@ -49,10 +150,17 @@
     "description": "Follower receives extra +15% from all Loyalty sources. Mutually exclusive with Cynical."
   },
   {
+    "id": 22,
+    "image": "/Traits/22.png",
+    "effect": "Negative",
+    "name": "Germaphobe",
+    "description": "Lose 10 Faith when falling ill."
+  },
+  {
     "id": 23,
     "image": "/Traits/23.png",
     "effect": "Positive",
-    "name": "Germaphobe",
+    "name": "Coprophiliac",
     "description": "Gain 10 Faith when falling ill. Won't vomit when seeing poop or vomit. Mutually exclusive with Germaphobe."
   },
   {
@@ -61,6 +169,55 @@
     "effect": "Positive",
     "name": "Industrious",
     "description": "Increase work speed by 15%."
+  },
+  {
+    "id": 25,
+    "image": "/Traits/25.png",
+    "effect": "Negative",
+    "name": "Sloth",
+    "description": "Work and devotion generation speed reduced by 10%."
+  },
+  {
+    "id": 26,
+    "image": "/Traits/26.png",
+    "effect": "Positive",
+    "name": "Devotee",
+    "description": "Gain +15 Faith instead of +10 when delivering a Sermon."
+  },
+  {
+    "id": 27,
+    "image": "/Traits/27.png",
+    "effect": "Positive",
+    "name": "Sacral Architecture",
+    "description": "When a new building is constructed, gain +5 Faith."
+  },
+  {
+    "id": 28,
+    "image": "/Traits/28.png",
+    "effect": "Positive",
+    "name": "Substances Encouraged",
+    "description": "Gain 20 Faith when Brainwashing Ritual is performed."
+  },
+  {
+    "id": 29,
+    "image": "/Traits/29.png",
+    "effect": "Positive",
+    "name": "Prohibitionism",
+    "description": "Increase work speed and devotion generation increased by 10% but 50% chance of Followers becoming sick after the Brainwashing Ritual."
+  },
+  {
+    "id": 30,
+    "image": "/Traits/30.png",
+    "effect": "Positive",
+    "name": "Respect Your Elders",
+    "description": "+5 Faith whenever Cult has an elder Follower."
+  },
+  {
+    "id": 31,
+    "image": "/Traits/31.png",
+    "effect": "Positive",
+    "name": "Good Die Young",
+    "description": "Gain +10 Faith if an Elder is sacrificed, murdered, or consumed, but lose -20 Faith if an Elder dies of old age."
   },
   {
     "id": 32,
@@ -77,11 +234,57 @@
     "description": "Will never starve."
   },
   {
+    "id": 34,
+    "image": "/Traits/34.png",
+    "effect": "Positive",
+    "name": "Ex-Cult Leader",
+    "description": "Raises the Loyalty of a nearby follower once per day.",
+    "restricted": true,
+    "restrictedReason": "This trait is(?) currently unused and is still in the game files and can be added to a follower through save-editing. It has no icon."
+  },
+  {
+    "id": 35,
+    "image": "/Traits/35.png",
+    "effect": "Positive",
+    "name": "Disciple",
+    "description": "A member of the inner circle. Can re-educate Dissenters and use special Shrines.",
+    "restricted": true
+  },
+  {
+    "id": 36,
+    "image": "/Traits/36.png",
+    "effect": "Negative",
+    "name": "Jerk",
+    "description": "Likes to cause mischief."
+  },
+  {
+    "id": 37,
+    "image": "/Traits/37.png",
+    "effect": "Negative",
+    "name": "Coward",
+    "description": "Might run away if frightened.",
+    "restricted": true
+  },
+  {
+    "id": 38,
+    "image": "/Traits/38.png",
+    "effect": "Negative",
+    "name": "Hot Tempered",
+    "description": "May start a fight with other Followers."
+  },
+  {
     "id": 39,
     "image": "/Traits/39.png",
     "effect": "Positive",
     "name": "Royal Pooper",
     "description": "All poops are golden."
+  },
+  {
+    "id": 41,
+    "image": "/Traits/41.png",
+    "effect": "Negative",
+    "name": "Celibate",
+    "description": "Not very...affectionate towards other Followers."
   },
   {
     "id": 42,
@@ -98,6 +301,34 @@
     "description": "Generates Devotion 20% faster when wearing a unique outfit."
   },
   {
+    "id": 44,
+    "image": "/Traits/44.png",
+    "effect": "Positive",
+    "name": "Doctrinal Extremist",
+    "description": "Unlocks the ability to generate Sin from Confession Booth instead of Loyalty."
+  },
+  {
+    "id": 45,
+    "image": "/Traits/45.png",
+    "effect": "Positive",
+    "name": "Violent Extremist",
+    "description": "Sin has a chance to appear upon beating mini-bosses. Mini-bosses from the Purgatory do not grant Sin."
+  },
+  {
+    "id": 46,
+    "image": "/Traits/46.png",
+    "effect": "Positive",
+    "name": "Born of Sin",
+    "description": "One Sin is automatically extracted from Followers hatched in the cult."
+  },
+  {
+    "id": 47,
+    "image": "/Traits/47.png",
+    "effect": "Positive",
+    "name": "Blind Allegiance",
+    "description": "Followers hatched in the cult with be born with a high Loyalty level."
+  },
+  {
     "id": 48,
     "image": "/Traits/48.png",
     "effect": "Positive",
@@ -112,6 +343,13 @@
     "description": "Decreases Sin generation by 10% but increases productivity by 15%."
   },
   {
+    "id": 50,
+    "image": "/Traits/50.png",
+    "effect": "Negative",
+    "name": "Virtuous",
+    "description": "Produces Sin 20% slower. Mutually exclusive with Unrepentant."
+  },
+  {
     "id": 51,
     "image": "/Traits/51.png",
     "effect": "Positive",
@@ -119,73 +357,132 @@
     "description": "Produces Sin 15% faster."
   },
   {
-    "id": 69,
+    "id": 52,
     "image": "/Traits/52.png",
+    "effect": "Negative",
+    "name": "Snorer",
+    "description": "Followers with the Snorer trait wake up followers who are sleeping nearby by snoring loudly at night."
+  },
+  {
+    "id": 58,
+    "image": "/Traits/58.png",
+    "effect": "Negative",
+    "name": "Unlawful",
+    "description": "Has a small chance each phase to break out of prison, and can even break other followers out of prison."
+  },
+  {
+    "id": 59,
+    "image": "/Traits/59.png",
+    "effect": "Negative",
+    "name": "Night Owl",
+    "description": "Sleeps during the day and works at night."
+  },
+  {
+    "id": 60,
+    "image": "/Traits/60.png",
+    "effect": "Negative",
+    "name": "Poet",
+    "description": "Never work and have no interactions; they will sit near the edge of the base, writing poetry all day."
+  },
+  {
+    "id": 61,
+    "image": "/Traits/61.png",
+    "effect": "Negative",
+    "name": "Scarred Criminal",
+    "description": "(Acts similarly to Coward trait).",
+    "restricted": true,
+    "restrictedReason": "After being released from the Prison, the follower may gain this temporary trait."
+  },
+  {
+    "id": 62,
+    "image": "/Traits/62.png",
+    "effect": "Positive",
+    "name": "Reformed Criminal",
+    "description": "Raises productivity by 10%.",
+    "restricted": true,
+    "restrictedReason": "After being released from the Prison, the follower may gain this temporary trait."
+  },
+  {
+    "id": 63,
+    "image": "/Traits/63.png",
+    "effect": "Negative",
+    "name": "Hardened Criminal",
+    "description": "(Acts similarly to Jerk trait).",
+    "restricted": true,
+    "restrictedReason": "After being released from the Prison, the follower may gain this temporary trait."
+  },
+  {
+    "id": 65,
+    "image": "/Traits/65.png",
+    "effect": "Positive",
+    "name": "Inspired by Mission",
+    "description": "Only positive conversations with other followers.",
+    "restricted": true,
+    "restrictedReason": "After returning alive from a Missionary, the follower may gain this temporary trait."
+  },
+  {
+    "id": 66,
+    "image": "/Traits/66.png",
+    "effect": "Positive",
+    "name": "Excited by Mission",
+    "description": "Has a 20% higher chance to be successful in Mating Tent.",
+    "restricted": true,
+    "restrictedReason": "After returning alive from a Missionary, the follower may gain this temporary trait."
+  },
+  {
+    "id": 67,
+    "image": "/Traits/67.png",
+    "effect": "Negative",
+    "name": "Disturbed by Mission",
+    "description": "Followers with this trait will behave the same way as Catatonic followers.",
+    "restricted": true,
+    "restrictedReason": "After returning alive from a Missionary, the follower may gain this temporary trait."
+  },
+  {
+    "id": 69,
+    "image": "/Traits/69.png",
     "effect": "Positive",
     "name": "Pettable",
     "description": "Can be pet regardless of the follower's form."
   },
   {
+    "id": 70,
+    "image": "/Traits/70.png",
+    "effect": "Negative",
+    "name": "Happily Married",
+    "description": "Productivity increased by 20%.",
+    "restricted": true
+  },
+  {
+    "id": 71,
+    "image": "/Traits/71.png",
+    "effect": "Negative",
+    "name": "Unhappily Married",
+    "description": "Decreases productivity by 20%.",
+    "restricted": true
+  },
+  {
     "id": 79,
-    "image": "/Traits/52.png",
+    "image": "/Traits/79.png",
     "effect": "Positive",
     "name": "Polyamorous",
     "description": "Never gets jealous of other spouse from them; cannot get other wedding related traits upon getting married."
   },
   {
-    "id": 20,
-    "image": "/Traits/20.png",
+    "id": 80,
+    "image": "/Traits/80.png",
     "effect": "Negative",
-    "name": "Cynical",
-    "description": "15% harder to level up."
+    "name": "Spy",
+    "description": "Followers may join the cult by themselves. Followers with this trait work and behave like any other followers and will leave the cult with 10% of gold after 5 days.",
+    "restricted": true
   },
   {
-    "id": 12,
-    "image": "/Traits/12.png",
-    "effect": "Negative",
-    "name": "Faithless",
-    "description": "Generates Devotion 15% slower."
-  },
-  {
-    "id": 22,
-    "image": "/Traits/22.png",
-    "effect": "Negative",
-    "name": "Germaphobe",
-    "description": "Lose 10 Faith when falling ill."
-  },
-  {
-    "id": 1,
-    "image": "/Traits/1.png",
-    "effect": "Negative",
-    "name": "Natural Skeptic",
-    "description": "On recruiting Follower immediately lose 10 Faith."
-  },
-  {
-    "id": 15,
-    "image": "/Traits/15.png",
-    "effect": "Negative",
-    "name": "Sickly",
-    "description": "Heals 15% slower when sick and in bed rest."
-  },
-  {
-    "id": 25,
-    "image": "/Traits/25.png",
-    "effect": "Negative",
-    "name": "Sloth",
-    "description": "Work and devotion generation speed reduced by 10%."
-  },
-  {
-    "id": 4,
-    "image": "/Traits/4.png",
-    "effect": "Negative",
-    "name": "Terrified of Death",
-    "description": "Lose -5 Faith whenever another Follower dies."
-  },
-  {
-    "id": 10,
-    "image": "/Traits/10.png",
-    "effect": "Negative",
-    "name": "Against Sacrifice",
-    "description": "-5 Faith when a Follower is Sacrificed."
+    "id": 81,
+    "image": "/Traits/81.png",
+    "effect": "Positive",
+    "name": "Bishop of [Cult Name]",
+    "description": "Will not dissent against the lamb.",
+    "restricted": true,
+    "restrictedReason": "This trait is exclusive to the ex-Bishops of Old Faith, which is hidden by default until you clear their corresponding quest fully."
   }
 ]

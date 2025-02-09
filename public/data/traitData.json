@@ -129,5 +129,36 @@
         "description": "Work speed and devotion generation increased by 10%, but 50% chance of Followers becoming sick after the Brainwashing ritual."
       }
     ]
+  },
+  {
+    "name": "Sins",
+    "leftBranch": [
+      {
+        "id": 44,
+        "image": "/Traits/44.png",
+        "name": "Doctrinal Extremist",
+        "description": "Unlocks the ability to generate Sin from Confession Booth instead of Loyalty."
+      },
+      {
+        "id": 46,
+        "image": "/Traits/46.png",
+        "name": "Born of Sin",
+        "description": "One Sin is automatically extracted from Followers hatched in the cult."
+      }
+    ],
+    "rightBranch": [
+      {
+        "id": 45,
+        "image": "/Traits/45.png",
+        "name": "Violent Extremist",
+        "description": "Sin has a chance to appear upon beating mini-bosses. Mini-bosses from the Purgatory do not grant Sin."
+      },
+      {
+        "id": 47,
+        "image": "/Traits/47.png",
+        "name": "Blind Allegiance",
+        "description": "Followers hatched in the cult with be born with a high Loyalty level."
+      }
+    ]
   }
 ]

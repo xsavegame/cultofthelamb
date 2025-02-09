@@ -38,6 +38,11 @@
         "name": "God Tear"
       },
       {
+        "id": 128,
+        "image": "/Items/128.png",
+        "name": "God Tear Fragment"
+      },
+      {
         "id": 154,
         "image": "/Items/154.png",
         "name": "Sin"
@@ -136,30 +141,20 @@
         "id": 105,
         "image": "/Items/105.png",
         "name": "Morsel"
+      },
+      {
+        "id": 159,
+        "image": "/Items/159.png",
+        "name": "Yolk"
       }
     ]
   },
   {
-    "name": "Other",
+    "name": "Necklaces",
     "items": [
       {
-        "id": 8,
-        "image": "/Items/8.png",
-        "name": "Berry Bush Seed"
-      },
-      {
-        "id": 43,
-        "image": "/Items/43.png",
-        "name": "Small Gift"
-      },
-      {
-        "id": 44,
-        "image": "/Items/44.png",
-        "name": "Big Gift"
-      },
-      {
         "id": 45,
-        "image": "Items/45.png",
+        "image": "/Items/45.png",
         "name": "Flower Necklace"
       },
       {
@@ -183,6 +178,52 @@
         "name": "Moon Necklace"
       },
       {
+        "id": 122,
+        "image": "/Items/122.png",
+        "name": "Loyalty Necklace"
+      },
+      {
+        "id": 123,
+        "image": "/Items/123.png",
+        "name": "Demonic Necklace"
+      },
+
+      {
+        "id": 126,
+        "image": "/Items/126.png",
+        "name": "Missionary Necklace"
+      },
+      {
+        "id": 127,
+        "image": "/Items/127.png",
+        "name": "Golden Skull Necklace"
+      }
+    ]
+  },
+  {
+    "name": "Other",
+    "items": [
+      {
+        "id": 8,
+        "image": "/Items/8.png",
+        "name": "Berry Bush Seed"
+      },
+      {
+        "id": 29,
+        "image": "/Items/29.png",
+        "name": "Menticide Mushroom"
+      },
+      {
+        "id": 43,
+        "image": "/Items/43.png",
+        "name": "Small Gift"
+      },
+      {
+        "id": 44,
+        "image": "/Items/44.png",
+        "name": "Big Gift"
+      },
+      {
         "id": 51,
         "image": "/Items/51.png",
         "name": "Pumpkin Seed"
@@ -191,11 +232,6 @@
         "id": 55,
         "image": "/Items/55.png",
         "name": "Camellia"
-      },
-      {
-        "id": 29,
-        "image": "/Items/29.png",
-        "name": "Menticide Mushroom"
       },
       {
         "id": 70,
@@ -256,13 +292,7 @@
         "id": 117,
         "image": "/Items/117.png",
         "name": "Shell"
-      },
-      {
-        "id": 127,
-        "image": "/Items/127.png",
-        "name": "Golden Skull Necklace"
       }
     ]
   }
 ]
-
