@@ -34,11 +34,12 @@ onMounted(() => {
 
 const onFileData = async (data: Data) => {
     try {
-        // TODO: Error handling
         await saveStore.importSave(data.data);
+        const isMp = data.name.endsWith('.mp');
         saveStore.setFileData({
             name: data.name,
-            encrypted: data.data[0] === 69
+            encrypted: data.data[0] === 69,
+            format: isMp ? 'mp' : 'json',
         })
         fileUploadModal.value?.modal?.hide();
     } catch (error) {
@@ -51,7 +52,8 @@ const loadTestData = async () => {
     saveStore.setSaveData(testSave.value);
     saveStore.setFileData({
         name: 'testSave.json',
-        encrypted: false
+        encrypted: false,
+        format: 'json',
     });
     fileUploadModal.value?.modal?.hide();
 }
