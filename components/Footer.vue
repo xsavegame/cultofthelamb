@@ -1,7 +1,7 @@
 <template>
     <footer class="row fixed-bottom p-3">
         <div class="col mt-3">
-            <span class="text-muted text-center">Made with ❤ by SavagE & hayper. Updated by thestrangedev</span>
+            <span class="text-muted text-center">Made with ❤ by SavagE & hayper. Updated by thestrangedev & <a href="https://teal.is" class="text-muted">Teal Starsong</a></span>
         </div>
         <div class="col text-center">
             <button class="btn btn-lg btn-success me-1 mb-1" form="form"
