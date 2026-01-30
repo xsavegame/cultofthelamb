@@ -45,16 +45,14 @@
                 </div>
             </div>
             <div class="col">
-                <label for="PLAYER_HEALTH">Red Hearts: <span class="text-muted" style="font-size:12px;">1 unit =
-                        half a
-                        heart (i.e 10 = 5 hearts)</span></label>
-                <input v-model="playerHealth" type="number" class="form-control" id="PLAYER_HEALTH"><br>
+                <label for="PLAYER_HEALTH">Red Hearts:</label>
+                <input v-model="playerHealth" type="number" step="0.5" class="form-control" id="PLAYER_HEALTH"><br>
                 <label for="PLAYER_SPIRIT_HEARTS">Spirit Hearts:</label>
-                <input v-model="playerSpiritHealth" type="number" class="form-control" id="PLAYER_SPIRIT_HEARTS"><br>
+                <input v-model="playerSpiritHealth" type="number" step="0.5" class="form-control" id="PLAYER_SPIRIT_HEARTS"><br>
                 <label for="PLAYER_BLACK_HEARTS">Diseased Hearts:</label>
-                <input v-model="playerBlackHealth" type="number" class="form-control" id="PLAYER_BLACK_HEARTS"><br>
+                <input v-model="playerBlackHealth" type="number" step="0.5" class="form-control" id="PLAYER_BLACK_HEARTS"><br>
                 <label for="PLAYER_BLUE_HEARTS">Blue Hearts:</label>
-                <input v-model="playerBlueHealth" type="number" class="form-control" id="PLAYER_BLUE_HEARTS"><br>
+                <input v-model="playerBlueHealth" type="number" step="0.5" class="form-control" id="PLAYER_BLUE_HEARTS"><br>
             </div>
         </div>
         <h2>Cult Traits</h2>
@@ -123,7 +121,7 @@
 </template>
 
 <script setup lang="ts">
-import { generateObjectInsensitiveComputed } from "~/utils/utility";
+import { generateObjectInsensitiveComputed, getPropertyCaseInsensitive, setPropertyCaseInsensitive } from "~/utils/utility";
 import { useSaveData } from "~/stores/saveData";
 import { useSiteData } from "~/stores/siteData";
 
@@ -141,10 +139,22 @@ const cultName = generateObjectInsensitiveComputed(() => saveStore.saveData, "Cu
 const deathCatBeaten = generateObjectInsensitiveComputed(() => saveStore.saveData, "DeathCatBeaten");
 const ratauKilled = generateObjectInsensitiveComputed(() => saveStore.saveData, "RatauKilled");
 
-const playerHealth = generateObjectInsensitiveComputed(() => saveStore.saveData, "PLAYER_HEALTH");
-const playerSpiritHealth = generateObjectInsensitiveComputed(() => saveStore.saveData, "PLAYER_SPIRIT_HEARTS");
-const playerBlackHealth = generateObjectInsensitiveComputed(() => saveStore.saveData, "PLAYER_BLACK_HEARTS");
-const playerBlueHealth = generateObjectInsensitiveComputed(() => saveStore.saveData, "PLAYER_BLUE_HEARTS");
+function heartComputed(property: string) {
+  return computed({
+    get() {
+      const raw = getPropertyCaseInsensitive(saveStore.saveData, property) as number;
+      return raw != null ? raw / 2 : raw;
+    },
+    set(value: number) {
+      setPropertyCaseInsensitive(saveStore.saveData, property, value * 2);
+    },
+  });
+}
+
+const playerHealth = heartComputed("PLAYER_HEALTH");
+const playerSpiritHealth = heartComputed("PLAYER_SPIRIT_HEARTS");
+const playerBlackHealth = heartComputed("PLAYER_BLACK_HEARTS");
+const playerBlueHealth = heartComputed("PLAYER_BLUE_HEARTS");
 
 const recipesDiscovered = generateObjectInsensitiveComputed(() => saveStore.saveData, "RecipesDiscovered");
 
