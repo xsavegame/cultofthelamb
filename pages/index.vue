@@ -1,58 +1,19 @@
 <template>
     <div v-if="saveStore.saveData">
-        <h2>Cult Information &amp; Character Stats</h2>
+        <h2>Cult Information</h2>
         <hr />
-        <div class="row mb-2">
-            <div class="col">
+        <div class="row mb-4">
+            <div class="col-md-4">
                 <label for="CultName">Cult Name:</label>
                 <input v-model="cultName" type="text" class="form-control" id="CultName" />
-                <br />
+            </div>
+            <div class="col-md-4">
                 <label for="CurrentDayIndex">Current Day:</label>
                 <input v-model="currentDayIndex" type="number" class="form-control" id="CurrentDayIndex" />
-                <br />
-                <h4>Dungeon Doors Unlocked</h4>
-                <div class="row mb-4">
-                    <div v-for="dungeon in dungeonData" class="col">
-                        <div v-for="dungeonData of dungeon">
-                            <input v-model="unlockedDungeonDoor" type="checkbox" class="form-check-input"
-                                :id="`dungeon_${dungeonData.id}`" :value="dungeonData.id">
-                            <label class="form-check-label" :for="`dungeon_${dungeonData.id}`">&nbsp;{{
-                                    dungeonData.name
-                            }}</label>
-                        </div>
-                    </div>
-                </div>
-                <button class="btn btn-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-                    aria-expanded="false" aria-controls="collapseExample">
-                    Spoiler section
-                </button>
-                <p />
-                <div class="collapse" id="collapseExample">
-                    <div class="card card-body">
-                        <div class="row">
-                            <div class="col">
-                                <input v-model="deathCatBeaten" type="checkbox" class="form-check-input"
-                                    id="DeathCatBeaten" @click="deathCatClick">
-                                <label for="DeathCatBeaten">&nbsp;The One Who Waits Beaten</label>
-                            </div>
-                            <div class="col">
-                                <input v-model="ratauKilled" type="checkbox" class="form-check-input" id="RatauKilled">
-                                <label for="RatauKilled">&nbsp;Ratau Killed</label>
-                            </div>
-                        </div>
-                        <DeathCatBeatenWarningModal ref="deathCatBeatenWarningModal" />
-                    </div>
-                </div>
             </div>
-            <div class="col">
-                <label for="PLAYER_HEALTH">Red Hearts:</label>
-                <input v-model="playerHealth" type="number" step="0.5" class="form-control" id="PLAYER_HEALTH"><br>
-                <label for="PLAYER_SPIRIT_HEARTS">Spirit Hearts:</label>
-                <input v-model="playerSpiritHealth" type="number" step="0.5" class="form-control" id="PLAYER_SPIRIT_HEARTS"><br>
-                <label for="PLAYER_BLACK_HEARTS">Diseased Hearts:</label>
-                <input v-model="playerBlackHealth" type="number" step="0.5" class="form-control" id="PLAYER_BLACK_HEARTS"><br>
-                <label for="PLAYER_BLUE_HEARTS">Blue Hearts:</label>
-                <input v-model="playerBlueHealth" type="number" step="0.5" class="form-control" id="PLAYER_BLUE_HEARTS"><br>
+            <div class="col-md-4">
+                <label for="missionariesCompleted">Missionaries Completed:</label>
+                <input v-model="missionariesCompleted" type="number" class="form-control" id="missionariesCompleted" />
             </div>
         </div>
         <h2>Doctrine Upgrades</h2>
@@ -121,49 +82,19 @@
 </template>
 
 <script setup lang="ts">
-import { generateObjectInsensitiveComputed, getPropertyCaseInsensitive, setPropertyCaseInsensitive } from "~/utils/utility";
+import { generateObjectInsensitiveComputed } from "~/utils/utility";
 import { useSaveData } from "~/stores/saveData";
-import { useSiteData } from "~/stores/siteData";
 
 const { data: traitData } = useFetch<{ name: string, leftBranch: { id: number, name: string, description: string, type: string }[], rightBranch: { id: number, name: string, description: string, type: string }[] }[]>('/data/traitData.json');
 const { data: recipeData } = useFetch<{ id: number, image: string, name: string, description: string, effect: string, ingredient: string, category: string, quality: string }[]>('/data/cookingRecipe.json');
-const { data: dungeonData } = useFetch<{ id: number, name: string }[][]>('/data/dungeonData.json');
 
 const saveStore = useSaveData();
-const siteData = useSiteData();
 
-const unlockedDungeonDoor = generateObjectInsensitiveComputed(() => saveStore.saveData, "UnlockedDungeonDoor");
 const currentDayIndex = generateObjectInsensitiveComputed(() => saveStore.saveData, "CurrentDayIndex");
 const cultName = generateObjectInsensitiveComputed(() => saveStore.saveData, "CultName");
-
-const deathCatBeaten = generateObjectInsensitiveComputed(() => saveStore.saveData, "DeathCatBeaten");
-const ratauKilled = generateObjectInsensitiveComputed(() => saveStore.saveData, "RatauKilled");
-
-function heartComputed(property: string) {
-  return computed({
-    get() {
-      const raw = getPropertyCaseInsensitive(saveStore.saveData, property) as number;
-      return raw != null ? raw / 2 : raw;
-    },
-    set(value: number) {
-      setPropertyCaseInsensitive(saveStore.saveData, property, value * 2);
-    },
-  });
-}
-
-const playerHealth = heartComputed("PLAYER_HEALTH");
-const playerSpiritHealth = heartComputed("PLAYER_SPIRIT_HEARTS");
-const playerBlackHealth = heartComputed("PLAYER_BLACK_HEARTS");
-const playerBlueHealth = heartComputed("PLAYER_BLUE_HEARTS");
+const missionariesCompleted = generateObjectInsensitiveComputed(() => saveStore.saveData, "MissionariesCompleted");
 
 const recipesDiscovered = generateObjectInsensitiveComputed(() => saveStore.saveData, "RecipesDiscovered");
 
-const deathCatBeatenWarningModal = ref(null);
 const SelectedTraitTab = ref<number>(0);
-
-const deathCatClick = () => {
-    if (siteData.deathCatWarningAcknowledged || !deathCatBeatenWarningModal.value) return;
-    (deathCatBeatenWarningModal.value as any).modal?.toggle();
-    siteData.deathCatWarningAcknowledged = true;
-}
 </script>
