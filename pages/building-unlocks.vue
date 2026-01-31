@@ -13,12 +13,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="structure in category.structures" :key="structure.id">
+                    <tr v-for="structure in category.structures" :key="structure.id"
+                        :class="{ 'text-muted': structure.legacy }">
                         <td>
                             <input v-model="unlockedUpgrades" type="checkbox" class="form-check-input"
                                 :value="structure.id">
                         </td>
-                        <td>{{ structure.name }}</td>
+                        <td>
+                            {{ structure.name }}
+                            <span v-if="structure.legacy" class="badge bg-secondary ms-1">Legacy</span>
+                        </td>
                         <td><code>{{ structure.id }}</code></td>
                     </tr>
                 </tbody>
@@ -32,7 +36,7 @@
 import { generateObjectInsensitiveComputed } from "~/utils/utility";
 import { useSaveData } from "~/stores/saveData";
 
-const { data: buildingData } = useFetch<{ category: string, structures: { id: number, name: string }[] }[]>('/data/buildingData.json');
+const { data: buildingData } = useFetch<{ category: string, structures: { id: number, name: string, legacy?: boolean }[] }[]>('/data/buildingData.json');
 
 const saveStore = useSaveData();
 

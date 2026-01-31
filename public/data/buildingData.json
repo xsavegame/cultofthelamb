@@ -13,7 +13,7 @@
     "category": "Food & Cooking",
     "structures": [
       { "id": 71, "name": "Kitchen" },
-      { "id": 212, "name": "Kitchen II" },
+      { "id": 212, "name": "Kitchen II", "legacy": true },
       { "id": 43, "name": "Farms" },
       { "id": 52, "name": "Follower Farming" },
       { "id": 44, "name": "Advanced Farming" },
@@ -23,8 +23,8 @@
       { "id": 125, "name": "Scarecrow II" },
       { "id": 138, "name": "Food Storage" },
       { "id": 143, "name": "Food Storage II" },
-      { "id": 119, "name": "Feast Table" },
-      { "id": 120, "name": "Seed Silo" },
+      { "id": 119, "name": "Feast Table", "legacy": true },
+      { "id": 120, "name": "Seed Silo", "legacy": true },
       { "id": 121, "name": "Fertiliser Silo" },
       { "id": 258, "name": "Poop Bucket" },
       { "id": 259, "name": "Seed Bucket" },
@@ -35,18 +35,11 @@
     "category": "Temple & Worship",
     "structures": [
       { "id": 42, "name": "Temple" },
-      { "id": 64, "name": "Temple II" },
-      { "id": 83, "name": "Temple III" },
-      { "id": 84, "name": "Temple IV" },
-      { "id": 56, "name": "Better Shrine" },
-      { "id": 72, "name": "Shrine II" },
-      { "id": 75, "name": "Shrine III" },
-      { "id": 79, "name": "Shrine IV" },
+      { "id": 50, "name": "Confession Booth" },
       { "id": 74, "name": "Offering Statue" },
       { "id": 76, "name": "Passive Shrines" },
       { "id": 77, "name": "Passive Shrines II" },
       { "id": 80, "name": "Passive Shrines III" },
-      { "id": 50, "name": "Confession Booth" },
       { "id": 127, "name": "Dancing Fire Pit" },
       { "id": 141, "name": "Shrines of Nature" },
       { "id": 262, "name": "Disciple Boost Shrine" },
@@ -56,8 +49,15 @@
     ]
   },
   {
-    "category": "Temple Upgrades",
+    "category": "Temple & Shrine Upgrades",
     "structures": [
+      { "id": 56, "name": "Better Shrine" },
+      { "id": 64, "name": "Temple II" },
+      { "id": 72, "name": "Shrine II" },
+      { "id": 75, "name": "Shrine III" },
+      { "id": 79, "name": "Shrine IV" },
+      { "id": 83, "name": "Temple III" },
+      { "id": 84, "name": "Temple IV" },
       { "id": 85, "name": "Monks Upgrade" },
       { "id": 86, "name": "Sermon Efficiency" },
       { "id": 87, "name": "Sermon Efficiency II" },
@@ -73,7 +73,7 @@
   {
     "category": "Production & Resources",
     "structures": [
-      { "id": 47, "name": "Lumber Mine" },
+      { "id": 47, "name": "Lumber Mine", "legacy": true },
       { "id": 33, "name": "Lumberjack Station" },
       { "id": 36, "name": "Lumberjack Station II" },
       { "id": 34, "name": "Refinery" },
@@ -91,7 +91,7 @@
     "structures": [
       { "id": 136, "name": "Healing Bay" },
       { "id": 137, "name": "Healing Bay II" },
-      { "id": 49, "name": "Apothecary" },
+      { "id": 49, "name": "Apothecary", "legacy": true },
       { "id": 46, "name": "Outhouse" },
       { "id": 124, "name": "Outhouse II" },
       { "id": 144, "name": "Janitor Station" },
@@ -106,7 +106,7 @@
     ]
   },
   {
-    "category": "Social & Rituals",
+    "category": "Social",
     "structures": [
       { "id": 45, "name": "Prison" },
       { "id": 269, "name": "Mating Tent" },
@@ -114,14 +114,14 @@
       { "id": 263, "name": "Pub" },
       { "id": 274, "name": "Pub II" },
       { "id": 254, "name": "Tailor" },
-      { "id": 318, "name": "Sacrifice Table" },
-      { "id": 255, "name": "Upgraded Indoctrination" }
+      { "id": 318, "name": "Sacrifice Table", "legacy": true },
+      { "id": 255, "name": "Upgraded Indoctrination", "legacy": true }
     ]
   },
   {
     "category": "Fishing & Missionary",
     "structures": [
-      { "id": 30, "name": "Fishing Rod" },
+      { "id": 30, "name": "Fishing Rod", "legacy": true },
       { "id": 123, "name": "Fishing Hut II" },
       { "id": 117, "name": "Missionary" },
       { "id": 210, "name": "Missionary II" },
@@ -131,13 +131,13 @@
   {
     "category": "Death & Burial",
     "structures": [
-      { "id": 48, "name": "Burial" },
+      { "id": 48, "name": "Burial", "legacy": true },
       { "id": 57, "name": "Graves" },
       { "id": 53, "name": "Natural Burial (Body Pit)" },
       { "id": 134, "name": "Body Pit" },
       { "id": 237, "name": "Morgue" },
       { "id": 238, "name": "Morgue II" },
-      { "id": 239, "name": "Morgue III" },
+      { "id": 239, "name": "Morgue III", "legacy": true },
       { "id": 246, "name": "Crypt" },
       { "id": 247, "name": "Crypt II" },
       { "id": 248, "name": "Crypt III" }
@@ -171,7 +171,7 @@
       { "id": 294, "name": "Ranch Trough" },
       { "id": 296, "name": "Ranch Hutch" },
       { "id": 343, "name": "Ranch Chopping Block" },
-      { "id": 272, "name": "Hatchery" },
+      { "id": 272, "name": "Hatchery", "legacy": true },
       { "id": 275, "name": "Hatchery II" },
       { "id": 289, "name": "Wooly Shack" },
       { "id": 297, "name": "Racing Gate" }
