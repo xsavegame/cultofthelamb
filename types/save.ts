@@ -171,6 +171,9 @@ export const SaveFileSchema = Type.Object({
   CurrentDayIndex: Type.Number(),
   UnlockedDungeonDoor: Type.Array(Type.Number()),
   CultTraits: Type.Array(Type.Number()),
+  DoctrineUnlockedUpgrades: Type.Array(Type.Number()),
+  UnlockedUpgrades: Type.Array(Type.Number()),
+  UnlockedStructures: Type.Array(Type.Number()),
 });
 
 export interface JsonSaveFile extends Static<typeof SaveFileSchema> {

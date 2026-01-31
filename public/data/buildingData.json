@@ -1,0 +1,195 @@
+[
+  {
+    "category": "Beds & Housing",
+    "structures": [
+      { "id": 51, "name": "Beds" },
+      { "id": 55, "name": "Better Beds" },
+      { "id": 118, "name": "Beds III" },
+      { "id": 249, "name": "Shared House" },
+      { "id": 282, "name": "Leader Tent" }
+    ]
+  },
+  {
+    "category": "Food & Cooking",
+    "structures": [
+      { "id": 71, "name": "Kitchen" },
+      { "id": 212, "name": "Kitchen II" },
+      { "id": 43, "name": "Farms" },
+      { "id": 52, "name": "Follower Farming" },
+      { "id": 44, "name": "Advanced Farming" },
+      { "id": 213, "name": "Farm Station II" },
+      { "id": 135, "name": "Harvest Totem" },
+      { "id": 126, "name": "Harvest Totem II" },
+      { "id": 125, "name": "Scarecrow II" },
+      { "id": 138, "name": "Food Storage" },
+      { "id": 143, "name": "Food Storage II" },
+      { "id": 119, "name": "Feast Table" },
+      { "id": 120, "name": "Seed Silo" },
+      { "id": 121, "name": "Fertiliser Silo" },
+      { "id": 258, "name": "Poop Bucket" },
+      { "id": 259, "name": "Seed Bucket" },
+      { "id": 317, "name": "Farm Crop Grower" }
+    ]
+  },
+  {
+    "category": "Temple & Worship",
+    "structures": [
+      { "id": 42, "name": "Temple" },
+      { "id": 64, "name": "Temple II" },
+      { "id": 83, "name": "Temple III" },
+      { "id": 84, "name": "Temple IV" },
+      { "id": 56, "name": "Better Shrine" },
+      { "id": 72, "name": "Shrine II" },
+      { "id": 75, "name": "Shrine III" },
+      { "id": 79, "name": "Shrine IV" },
+      { "id": 74, "name": "Offering Statue" },
+      { "id": 76, "name": "Passive Shrines" },
+      { "id": 77, "name": "Passive Shrines II" },
+      { "id": 80, "name": "Passive Shrines III" },
+      { "id": 50, "name": "Confession Booth" },
+      { "id": 127, "name": "Dancing Fire Pit" },
+      { "id": 141, "name": "Shrines of Nature" },
+      { "id": 262, "name": "Disciple Boost Shrine" },
+      { "id": 271, "name": "Disciple Collection Shrine" },
+      { "id": 264, "name": "Pleasure Shrine" },
+      { "id": 266, "name": "Drum Circle" }
+    ]
+  },
+  {
+    "category": "Temple Upgrades",
+    "structures": [
+      { "id": 85, "name": "Monks Upgrade" },
+      { "id": 86, "name": "Sermon Efficiency" },
+      { "id": 87, "name": "Sermon Efficiency II" },
+      { "id": 88, "name": "Super Sermon" },
+      { "id": 89, "name": "Cheaper Rituals" },
+      { "id": 90, "name": "Cheaper Rituals II" },
+      { "id": 91, "name": "Faster Cooldowns" },
+      { "id": 92, "name": "Faster Cooldowns II" },
+      { "id": 128, "name": "Donation Box" },
+      { "id": 93, "name": "Donation Box II" }
+    ]
+  },
+  {
+    "category": "Production & Resources",
+    "structures": [
+      { "id": 47, "name": "Lumber Mine" },
+      { "id": 33, "name": "Lumberjack Station" },
+      { "id": 36, "name": "Lumberjack Station II" },
+      { "id": 34, "name": "Refinery" },
+      { "id": 35, "name": "Refinery II" },
+      { "id": 32, "name": "Bloodstone Mine" },
+      { "id": 31, "name": "Bloodstone Mine II" },
+      { "id": 344, "name": "Rotstone Mine" },
+      { "id": 345, "name": "Rotstone Mine II" },
+      { "id": 316, "name": "Toolshed" },
+      { "id": 301, "name": "Logistics" }
+    ]
+  },
+  {
+    "category": "Follower Care",
+    "structures": [
+      { "id": 136, "name": "Healing Bay" },
+      { "id": 137, "name": "Healing Bay II" },
+      { "id": 49, "name": "Apothecary" },
+      { "id": 46, "name": "Outhouse" },
+      { "id": 124, "name": "Outhouse II" },
+      { "id": 144, "name": "Janitor Station" },
+      { "id": 260, "name": "Janitor Station II" },
+      { "id": 116, "name": "Propaganda Speakers" },
+      { "id": 122, "name": "Surveillance" },
+      { "id": 292, "name": "Medic" },
+      { "id": 283, "name": "Daycare" },
+      { "id": 319, "name": "Trait Manipulator" },
+      { "id": 320, "name": "Trait Manipulator II" },
+      { "id": 321, "name": "Trait Manipulator III" }
+    ]
+  },
+  {
+    "category": "Social & Rituals",
+    "structures": [
+      { "id": 45, "name": "Prison" },
+      { "id": 269, "name": "Mating Tent" },
+      { "id": 284, "name": "Knucklebones" },
+      { "id": 263, "name": "Pub" },
+      { "id": 274, "name": "Pub II" },
+      { "id": 254, "name": "Tailor" },
+      { "id": 318, "name": "Sacrifice Table" },
+      { "id": 255, "name": "Upgraded Indoctrination" }
+    ]
+  },
+  {
+    "category": "Fishing & Missionary",
+    "structures": [
+      { "id": 30, "name": "Fishing Rod" },
+      { "id": 123, "name": "Fishing Hut II" },
+      { "id": 117, "name": "Missionary" },
+      { "id": 210, "name": "Missionary II" },
+      { "id": 211, "name": "Missionary III" }
+    ]
+  },
+  {
+    "category": "Death & Burial",
+    "structures": [
+      { "id": 48, "name": "Burial" },
+      { "id": 57, "name": "Graves" },
+      { "id": 53, "name": "Natural Burial (Body Pit)" },
+      { "id": 134, "name": "Body Pit" },
+      { "id": 237, "name": "Morgue" },
+      { "id": 238, "name": "Morgue II" },
+      { "id": 239, "name": "Morgue III" },
+      { "id": 246, "name": "Crypt" },
+      { "id": 247, "name": "Crypt II" },
+      { "id": 248, "name": "Crypt III" }
+    ]
+  },
+  {
+    "category": "Summoning",
+    "structures": [
+      { "id": 145, "name": "Demon Summoner" },
+      { "id": 155, "name": "Demon Summoner II" },
+      { "id": 156, "name": "Demon Summoner III" }
+    ]
+  },
+  {
+    "category": "Weather & Environment",
+    "structures": [
+      { "id": 287, "name": "Weather Vane" },
+      { "id": 253, "name": "Lightning Rod" },
+      { "id": 315, "name": "Lightning Rod II" },
+      { "id": 311, "name": "Furnace" },
+      { "id": 312, "name": "Furnace II" },
+      { "id": 313, "name": "Furnace III" },
+      { "id": 288, "name": "Volcanic Spa" }
+    ]
+  },
+  {
+    "category": "Ranch",
+    "structures": [
+      { "id": 291, "name": "Ranch" },
+      { "id": 295, "name": "Ranch II" },
+      { "id": 294, "name": "Ranch Trough" },
+      { "id": 296, "name": "Ranch Hutch" },
+      { "id": 343, "name": "Ranch Chopping Block" },
+      { "id": 272, "name": "Hatchery" },
+      { "id": 275, "name": "Hatchery II" },
+      { "id": 289, "name": "Wooly Shack" },
+      { "id": 297, "name": "Racing Gate" }
+    ]
+  },
+  {
+    "category": "Security",
+    "structures": [
+      { "id": 309, "name": "Wolf Trap" }
+    ]
+  },
+  {
+    "category": "Decorations",
+    "structures": [
+      { "id": 139, "name": "Decorations Pack 1" },
+      { "id": 140, "name": "Decorations Pack 2" },
+      { "id": 324, "name": "DLC Decorations Pack 1" },
+      { "id": 325, "name": "DLC Decorations Pack 2" }
+    ]
+  }
+]
