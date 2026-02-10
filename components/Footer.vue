@@ -21,7 +21,9 @@ const saveStore = useSaveData();
 const downloadSaveFile = async (e: MouseEvent) => {
     e.preventDefault();
     if (!document) return;
-    const blob = new Blob([await saveStore.exportSave()], { type: "application/json" });
+    const isMp = saveStore.fileData?.format === 'mp';
+    const mimeType = isMp ? 'application/octet-stream' : 'application/json';
+    const blob = new Blob([await saveStore.exportSave()], { type: mimeType });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
