@@ -543,7 +543,7 @@ export function decodeMpSave(decrypted: Uint8Array): { data: Record<string, any>
   const headerBytes = extHeader.data instanceof Uint8Array ? extHeader.data : extHeader.data(0);
   const headerDecoder = new MpDecoder(headerBytes);
   const sizes: number[] = [];
-  while (headerDecoder.position < extHeader.data.length) {
+  while (headerDecoder.position < headerBytes.length) {
     sizes.push(headerDecoder.decode());
   }
 
