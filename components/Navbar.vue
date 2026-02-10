@@ -18,7 +18,8 @@ const route = useRoute();
 const isActive = (path: string) => route.path === path;
 
 const routeList = {
-    "/": "Cult & Character",
+    "/": "Cult Info",
+    "/character-progress": "Character & Progress",
     "/inventory-editor": "Inventory Editor",
     "/tarot-cards": "Tarot Cards",
     "/followers": "Followers",

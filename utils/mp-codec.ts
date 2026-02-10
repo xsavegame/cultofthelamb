@@ -540,9 +540,14 @@ export function decodeMpSave(decrypted: Uint8Array): { data: Record<string, any>
 
   // Step 2: Parse ext(98) header for uncompressed sizes
   const extHeader = outer[0] as ExtData;
-  const headerDecoder = new MpDecoder(extHeader.data);
+  const headerData = typeof extHeader.data === 'function'
+    ? extHeader.data(0)
+    : extHeader.data instanceof Uint8Array
+      ? extHeader.data
+      : new Uint8Array(extHeader.data as any);
+  const headerDecoder = new MpDecoder(headerData);
   const sizes: number[] = [];
-  while (headerDecoder.position < extHeader.data.length) {
+  while (headerDecoder.position < headerData.length) {
     sizes.push(headerDecoder.decode());
   }
 

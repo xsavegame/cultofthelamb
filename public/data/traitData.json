@@ -3,99 +3,54 @@
     "name": "Afterlife",
     "leftBranch": [
       {
-        "id": 9,
-        "image": "/Traits/9.png",
+        "id": 30,
         "name": "Belief in Sacrifice",
-        "description": "Gain 20 Faith whenever a follower is sacrificed."
+        "description": "Gain 20 Faith whenever a Follower is sacrificed.",
+        "type": "Trait"
       },
       {
-        "id": 30,
-        "image": "/Traits/30.png",
+        "id": 32,
+        "name": "Resurrection",
+        "description": "Ritual: Return a dead Follower to life as an old Follower.",
+        "type": "Ritual"
+      },
+      {
+        "id": 34,
         "name": "Respect Your Elders",
-        "description": "Gain 10 Faith when a Follower becomes an elder."
+        "description": "Gain 10 Faith when a Follower becomes an elder.",
+        "type": "Trait"
+      },
+      {
+        "id": 36,
+        "name": "Return to the Earth",
+        "description": "Unlocks the Body Pit. Compost dead Followers into fertilizer.",
+        "type": "Building"
       }
     ],
     "rightBranch": [
-      {
-        "id": 3,
-        "image": "/Traits/3.png",
-        "name": "Belief in Afterlife",
-        "description": "Death is not the end. When a Follower dies only lose -5 faith instead of -20."
-      },
       {
         "id": 31,
-        "image": "/Traits/31.png",
+        "name": "Belief in Afterlife",
+        "description": "When a Follower dies, only lose 5 Faith instead of 20.",
+        "type": "Trait"
+      },
+      {
+        "id": 33,
+        "name": "Funeral",
+        "description": "Ritual: Hold a funeral for a dead Follower. Gain Faith.",
+        "type": "Ritual"
+      },
+      {
+        "id": 35,
         "name": "Good Die Young",
-        "description": "Gain 10 Faith if an elder is sacrificed, murdered or consumed, but lose 20 Faith if an elder dies naturally."
-      }
-    ]
-  },
-  {
-    "name": "Work and Worship",
-    "leftBranch": [
-      {
-        "id": 11,
-        "image": "/Traits/11.png",
-        "name": "Faithful",
-        "description": "Generates Devotion 15% faster."
-      }
-    ],
-    "rightBranch": [
-      {
-        "id": 24,
-        "image": "/Traits/24.png",
-        "name": "Industrious",
-        "description": "Increased work speed by 15%."
-      }
-    ]
-  },
-  {
-    "name": "Possessions",
-    "leftBranch": [
-      {
-        "id": 18,
-        "image": "/Traits/18.png",
-        "name": "Materialistic",
-        "description": "Gain Faith when building better sleeping quarters."
+        "description": "Gain 10 Faith if an elder is sacrificed, murdered or consumed, but lose 20 Faith if an elder dies naturally.",
+        "type": "Trait"
       },
       {
-        "id": 27,
-        "image": "/Traits/27.png",
-        "name": "Sacral Architecture",
-        "description": "Gain 5 Faith when a building is constructed."
-      }
-    ],
-    "rightBranch": [
-      {
-        "id": 19,
-        "image": "/Traits/19.png",
-        "name": "False Idols",
-        "description": "Gain 7 Faith when a decoration is built."
-      },
-      {
-        "id": 26,
-        "image": "/Traits/26.png",
-        "name": "Devotee",
-        "description": "Gain more Faith when you give a sermon."
-      }
-    ]
-  },
-  {
-    "name": "Law and Order",
-    "leftBranch": [
-      {
-        "id": 7,
-        "image": "/Traits/7.png",
-        "name": "Belief in Original Sin",
-        "description": "All are born guilty. Reduced Faith loss when putting a Follower in jail who is not dissenting."
-      }
-    ],
-    "rightBranch": [
-      {
-        "id": 8,
-        "image": "/Traits/8.png",
-        "name": "Absolution",
-        "description": "Freedom above all else. Every day that begins without anyone in prison, gain +10 Faith."
+        "id": 37,
+        "name": "Good Graves",
+        "description": "Followers gain Faith when visiting a grave. Unlocks upgraded graves.",
+        "type": "Building"
       }
     ]
   },
@@ -103,30 +58,219 @@
     "name": "Sustenance",
     "leftBranch": [
       {
-        "id": 5,
-        "image": "/Traits/5.png",
+        "id": 22,
+        "name": "Ritual Fast",
+        "description": "Ritual: All Followers fast. No Faith loss from starvation during fast.",
+        "type": "Ritual"
+      },
+      {
+        "id": 24,
+        "name": "Mushroom Encouraged",
+        "description": "Followers gain Faith when eating mushroom-based meals.",
+        "type": "Trait"
+      },
+      {
+        "id": 26,
         "name": "Cannibal",
-        "description": "Gain +5 Faith when a Follower eats a meal made from Follower meat."
+        "description": "Gain 5 Faith when a Follower eats a meal made from Follower meat.",
+        "type": "Trait"
       },
       {
         "id": 28,
-        "image": "/Traits/28.png",
-        "name": "Substances Encouraged",
-        "description": "Gain 20 Faith when Brainwashing Ritual is performed."
+        "name": "Harvest Ritual",
+        "description": "Ritual: Instantly harvest all ready crops.",
+        "type": "Ritual"
       }
     ],
     "rightBranch": [
       {
-        "id": 6,
-        "image": "/Traits/6.png",
+        "id": 23,
+        "name": "Feasting Ritual",
+        "description": "Ritual: All Followers celebrate with a communal feast. Gain Faith.",
+        "type": "Ritual"
+      },
+      {
+        "id": 25,
+        "name": "Mushroom Banned",
+        "description": "Followers gain Faith when eating non-mushroom meals.",
+        "type": "Trait"
+      },
+      {
+        "id": 27,
         "name": "Grass Eater",
-        "description": "No longer lose Faith when a follower eats a Grass Meal."
+        "description": "No longer lose Faith when a Follower eats a Grass Meal.",
+        "type": "Trait"
       },
       {
         "id": 29,
-        "image": "/Traits/29.png",
-        "name": "Prohibitionist",
-        "description": "Work speed and devotion generation increased by 10%, but 50% chance of Followers becoming sick after the Brainwashing ritual."
+        "name": "Fishing Ritual",
+        "description": "Ritual: Send a Follower on a fishing trip. They return with fish.",
+        "type": "Ritual"
+      }
+    ]
+  },
+  {
+    "name": "Work and Worship",
+    "leftBranch": [
+      {
+        "id": 6,
+        "name": "Inspire",
+        "description": "Ability: Inspire a Follower to increase their loyalty.",
+        "type": "Ability"
+      },
+      {
+        "id": 8,
+        "name": "Glory Through Toil",
+        "description": "Ritual: Followers build structures faster for a time.",
+        "type": "Ritual"
+      },
+      {
+        "id": 10,
+        "name": "Faithful",
+        "description": "Generates Devotion 15% faster.",
+        "type": "Trait"
+      },
+      {
+        "id": 12,
+        "name": "Work Through Night",
+        "description": "Ritual: Followers work through the night without rest.",
+        "type": "Ritual"
+      }
+    ],
+    "rightBranch": [
+      {
+        "id": 7,
+        "name": "Intimidate",
+        "description": "Ability: Intimidate a Follower to increase loyalty through fear.",
+        "type": "Ability"
+      },
+      {
+        "id": 9,
+        "name": "Ritual of Enlightenment",
+        "description": "Ritual: Generate a large amount of Devotion instantly.",
+        "type": "Ritual"
+      },
+      {
+        "id": 11,
+        "name": "Industrious",
+        "description": "Increased work speed by 15%.",
+        "type": "Trait"
+      },
+      {
+        "id": 13,
+        "name": "Holy Day",
+        "description": "Ritual: Give Followers a day off. Gain Faith.",
+        "type": "Ritual"
+      }
+    ]
+  },
+  {
+    "name": "Possessions",
+    "leftBranch": [
+      {
+        "id": 14,
+        "name": "Extort Tithes",
+        "description": "Ability: Demand tithes from a Follower for coins.",
+        "type": "Ability"
+      },
+      {
+        "id": 16,
+        "name": "Materialistic",
+        "description": "Gain Faith when building better sleeping quarters.",
+        "type": "Trait"
+      },
+      {
+        "id": 18,
+        "name": "Sacral Architecture",
+        "description": "Gain 5 Faith when a building is constructed.",
+        "type": "Trait"
+      },
+      {
+        "id": 20,
+        "name": "Alms to the Poor",
+        "description": "Ritual: Distribute coins to all Followers. Gain Faith.",
+        "type": "Ritual"
+      }
+    ],
+    "rightBranch": [
+      {
+        "id": 15,
+        "name": "Bribe Follower",
+        "description": "Ability: Bribe a dissenting Follower with coins to restore loyalty.",
+        "type": "Ability"
+      },
+      {
+        "id": 17,
+        "name": "Devotee",
+        "description": "Gain more Faith when you give a sermon.",
+        "type": "Trait"
+      },
+      {
+        "id": 19,
+        "name": "False Idols",
+        "description": "Gain 7 Faith when a decoration is built.",
+        "type": "Trait"
+      },
+      {
+        "id": 21,
+        "name": "Ritual of Enrichment",
+        "description": "Ritual: Followers donate coins to the cult.",
+        "type": "Ritual"
+      }
+    ]
+  },
+  {
+    "name": "Law and Order",
+    "leftBranch": [
+      {
+        "id": 38,
+        "name": "Murder Follower",
+        "description": "Ability: Murder a Follower at any time.",
+        "type": "Ability"
+      },
+      {
+        "id": 40,
+        "name": "Fight Pit",
+        "description": "Ritual: Two Followers fight to the death. Gain Faith.",
+        "type": "Ritual"
+      },
+      {
+        "id": 42,
+        "name": "Faith Enforcer",
+        "description": "Ritual: Assign a Follower as Faith Enforcer to boost Faith generation.",
+        "type": "Ritual"
+      },
+      {
+        "id": 44,
+        "name": "Belief in Original Sin",
+        "description": "Reduced Faith loss when putting a Follower in jail who is not dissenting.",
+        "type": "Trait"
+      }
+    ],
+    "rightBranch": [
+      {
+        "id": 39,
+        "name": "Ascend Follower",
+        "description": "Ritual: A loyal Follower ascends to the heavens. Gain Faith.",
+        "type": "Ritual"
+      },
+      {
+        "id": 41,
+        "name": "Wedding / Divorce",
+        "description": "Ritual: Marry Followers or dissolve marriages.",
+        "type": "Ritual"
+      },
+      {
+        "id": 43,
+        "name": "Tax Collector",
+        "description": "Ritual: Assign a Follower as Tax Collector to generate coins.",
+        "type": "Ritual"
+      },
+      {
+        "id": 45,
+        "name": "Absolution",
+        "description": "Every day without anyone in prison, gain 10 Faith.",
+        "type": "Trait"
       }
     ]
   },
@@ -134,30 +278,109 @@
     "name": "Sins",
     "leftBranch": [
       {
-        "id": 44,
-        "image": "/Traits/44.png",
-        "name": "Doctrinal Extremist",
-        "description": "Unlocks the ability to generate Sin from Confession Booth instead of Loyalty."
+        "id": 53,
+        "name": "Nudist",
+        "description": "Ritual: Strip all Followers of their clothing.",
+        "type": "Ritual"
       },
       {
-        "id": 46,
-        "image": "/Traits/46.png",
-        "name": "Born of Sin",
-        "description": "One Sin is automatically extracted from Followers hatched in the cult."
+        "id": 60,
+        "name": "Atone Sin",
+        "description": "Ritual: A Follower atones for their sins.",
+        "type": "Ritual"
+      },
+      {
+        "id": 55,
+        "name": "Doctrinal Extremist",
+        "description": "Unlocks the ability to generate Sin from Confession Booth instead of Loyalty.",
+        "type": "Trait"
+      },
+      {
+        "id": 57,
+        "name": "Fertility Ritual",
+        "description": "Ritual: Increase the chance of Followers producing offspring.",
+        "type": "Ritual"
       }
     ],
     "rightBranch": [
       {
-        "id": 45,
-        "image": "/Traits/45.png",
-        "name": "Violent Extremist",
-        "description": "Sin has a chance to appear upon beating mini-bosses. Mini-bosses from the Purgatory do not grant Sin."
+        "id": 54,
+        "name": "Purge",
+        "description": "Ritual: Purge a sinful Follower. Gain Faith.",
+        "type": "Ritual"
       },
       {
-        "id": 47,
-        "image": "/Traits/47.png",
+        "id": 59,
+        "name": "Cannibal Ritual",
+        "description": "Ritual: Followers consume the flesh of a sacrificed Follower.",
+        "type": "Ritual"
+      },
+      {
+        "id": 56,
+        "name": "Violent Extremist",
+        "description": "Sin has a chance to appear upon beating mini-bosses.",
+        "type": "Trait"
+      },
+      {
+        "id": 58,
         "name": "Blind Allegiance",
-        "description": "Followers hatched in the cult with be born with a high Loyalty level."
+        "description": "Followers hatched in the cult will be born with high Loyalty.",
+        "type": "Trait"
+      }
+    ]
+  },
+  {
+    "name": "Winter",
+    "leftBranch": [
+      {
+        "id": 72,
+        "name": "Furnace Follower",
+        "description": "Followers can warm themselves at the furnace.",
+        "type": "Trait"
+      },
+      {
+        "id": 74,
+        "name": "Convert to Rot",
+        "description": "Ritual: Convert resources into Rotstone.",
+        "type": "Ritual"
+      },
+      {
+        "id": 64,
+        "name": "Work Through Blizzard",
+        "description": "Followers will continue to work during blizzards.",
+        "type": "Trait"
+      },
+      {
+        "id": 70,
+        "name": "Ranch Harvest",
+        "description": "Ritual: Instantly harvest resources from the ranch.",
+        "type": "Ritual"
+      }
+    ],
+    "rightBranch": [
+      {
+        "id": 73,
+        "name": "Furnace Animal",
+        "description": "Animals can warm themselves at the furnace.",
+        "type": "Trait"
+      },
+      {
+        "id": 78,
+        "name": "Remove Rot",
+        "description": "Followers can remove Rot from the cult grounds.",
+        "type": "Trait"
+      },
+      {
+        "id": 65,
+        "name": "Cold Enthusiast",
+        "description": "Followers gain Faith during blizzards.",
+        "type": "Trait"
+      },
+      {
+        "id": 71,
+        "name": "Ranch Meat",
+        "description": "Ritual: Butcher ranch animals for meat.",
+        "type": "Ritual"
       }
     ]
   }

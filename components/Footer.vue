@@ -1,10 +1,10 @@
 <template>
     <footer class="row fixed-bottom p-3">
         <div class="col mt-3">
-            <span class="text-muted text-center">Made with ❤ by SavagE & hayper. Updated by thestrangedev</span>
+            <span class="text-muted text-center">Made with ❤ by SavagE & hayper. Updated by thestrangedev & <a href="https://teal.is" class="text-muted">Teal Starsong</a></span>
         </div>
-        <div class="col text-center">
-            <button class="btn btn-lg btn-success me-1 mb-1" form="form"
+        <div class="col d-flex align-items-center justify-content-center gap-2">
+            <button class="btn btn-lg btn-success" form="form"
                 @click="downloadSaveFile">Save</button>
             <button type="button" class="btn btn-lg btn-primary" form="form"
                 @click="loadNewFile">Load A New File</button>
