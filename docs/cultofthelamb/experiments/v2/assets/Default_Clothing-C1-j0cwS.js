@@ -1,1 +1,0 @@
-var e=`/cultofthelamb/experiments/v2/assets/Default_Clothing-CvtSvjc3.dat`;export{e as default};

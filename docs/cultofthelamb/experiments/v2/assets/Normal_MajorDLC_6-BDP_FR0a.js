@@ -1,1 +1,0 @@
-var e=`/cultofthelamb/experiments/v2/assets/Normal_MajorDLC_6-Ci2zfPEC.dat`;export{e as default};

@@ -1,1 +1,0 @@
-var e=`/cultofthelamb/experiments/v2/assets/Pilgrim_DLC_Clothing2-BbAK3FAg.dat`;export{e as default};

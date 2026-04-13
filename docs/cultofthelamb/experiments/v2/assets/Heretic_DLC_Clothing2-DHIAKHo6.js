@@ -1,1 +1,0 @@
-var e=`/cultofthelamb/experiments/v2/assets/Heretic_DLC_Clothing2-rKPVff0x.dat`;export{e as default};

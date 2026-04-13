@@ -1,1 +1,0 @@
-var e=`/cultofthelamb/experiments/v2/assets/DLC_3-DNQETX8u.dat`;export{e as default};
