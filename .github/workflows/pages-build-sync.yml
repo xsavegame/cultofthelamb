@@ -34,74 +34,11 @@ jobs:
       - name: Determine sync context
         id: context
         shell: bash
-        run: |
-          set -euo pipefail
-
-          repo_name="${GITHUB_REPOSITORY#*/}"
-          mode="skip"
-          source_ref=""
-          source_sha=""
-          target_dir=""
-          segment=""
-          branch_name=""
-          base_url=""
-
-          is_valid_segment() {
-            local value="$1"
-            [[ -n "$value" ]] || return 1
-            [[ "$value" != */* ]] || return 1
-            [[ "$value" =~ ^[A-Za-z0-9._-]+$ ]]
-          }
-
-          if [[ "${GITHUB_EVENT_NAME}" == "release" ]]; then
-            mode="deploy"
-            source_ref="${{ github.event.release.tag_name }}"
-            target_dir="docs/${repo_name}/latest"
-            base_url="/${repo_name}/latest/"
-          elif [[ "${GITHUB_EVENT_NAME}" == "push" ]]; then
-            branch_name="${GITHUB_REF_NAME}"
-            if [[ "$branch_name" == experiments/* ]]; then
-              segment="${branch_name#experiments/}"
-              if is_valid_segment "$segment"; then
-                mode="deploy"
-                source_ref="$branch_name"
-                source_sha="${GITHUB_SHA}"
-                target_dir="docs/${repo_name}/experiments/${segment}"
-                base_url="/${repo_name}/experiments/${segment}/"
-              else
-                mode="index_only"
-              fi
-            fi
-          elif [[ "${GITHUB_EVENT_NAME}" == "delete" ]]; then
-            if [[ "${{ github.event.ref_type }}" == "branch" ]]; then
-              branch_name="${{ github.event.ref }}"
-              if [[ "$branch_name" == experiments/* ]]; then
-                segment="${branch_name#experiments/}"
-                if is_valid_segment "$segment"; then
-                  mode="cleanup"
-                  target_dir="docs/${repo_name}/experiments/${segment}"
-                  base_url="/${repo_name}/experiments/${segment}/"
-                else
-                  mode="index_only"
-                fi
-              fi
-            fi
-          fi
-
-          if [[ -n "${EXPLICIT_BASE_URL}" ]]; then
-            base_url="${EXPLICIT_BASE_URL}"
-          fi
-
-          {
-            echo "repo_name=${repo_name}"
-            echo "mode=${mode}"
-            echo "source_ref=${source_ref}"
-            echo "source_sha=${source_sha}"
-            echo "target_dir=${target_dir}"
-            echo "segment=${segment}"
-            echo "branch_name=${branch_name}"
-            echo "base_url=${base_url}"
-          } >> "$GITHUB_OUTPUT"
+        env:
+          RELEASE_TAG_NAME: ${{ github.event.release.tag_name }}
+          DELETE_REF_TYPE: ${{ github.event.ref_type }}
+          DELETE_REF_NAME: ${{ github.event.ref }}
+        run: bash "${GITHUB_WORKSPACE}/.github/scripts/determine-sync-context.sh"
 
       - name: Exit when no work is needed
         if: steps.context.outputs.mode == 'skip'
@@ -111,102 +48,29 @@ jobs:
         id: release
         if: steps.context.outputs.mode == 'deploy' && github.event_name == 'release'
         shell: bash
-        run: |
-          set -euo pipefail
-
-          tag_name="${{ github.event.release.tag_name }}"
-          target_branch="${{ github.event.release.target_commitish }}"
-          target_branch="${target_branch#refs/heads/}"
-          release_version="${tag_name#v}"
-
-          if ! [[ "$release_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+([-.][0-9A-Za-z.-]+)?$ ]]; then
-            echo "::error::Release tag '${tag_name}' does not contain a valid semver version."
-            exit 1
-          fi
-
-          if ! git ls-remote --exit-code --heads origin "refs/heads/${target_branch}" >/dev/null 2>&1; then
-            echo "::error::release.target_commitish '${target_branch}' is not a branch in origin."
-            exit 1
-          fi
-
-          git fetch origin "refs/heads/${target_branch}:refs/heads/${target_branch}" --tags
-
-          original_tag_sha="$(git rev-parse "${tag_name}^{commit}")"
-          source_author_name="$(git show -s --format=%an "${original_tag_sha}")"
-          source_author_email="$(git show -s --format=%ae "${original_tag_sha}")"
-
-          git checkout "${target_branch}"
-
-          node - "$release_version" <<'NODE'
-          const fs = require('node:fs');
-
-          const version = process.argv[2];
-          const packageJsonPath = 'package.json';
-          const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
-          packageJson.version = version;
-          fs.writeFileSync(packageJsonPath, `${JSON.stringify(packageJson, null, 2)}\n`);
-          NODE
-
-          if git diff --quiet -- package.json; then
-            new_source_sha="${original_tag_sha}"
-          else
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add package.json
-            git commit --author="${source_author_name} <${source_author_email}>" -m "chore(release): bump version to ${release_version}"
-            git push origin "HEAD:${target_branch}"
-            new_source_sha="$(git rev-parse HEAD)"
-          fi
-
-          git tag -f "${tag_name}" "${new_source_sha}"
-          git push origin "refs/tags/${tag_name}" --force
-
-          {
-            echo "source_sha=${new_source_sha}"
-            echo "source_ref=${tag_name}"
-          } >> "$GITHUB_OUTPUT"
+        env:
+          RELEASE_TAG_NAME: ${{ github.event.release.tag_name }}
+          RELEASE_TARGET_BRANCH: ${{ github.event.release.target_commitish }}
+        run: bash "${GITHUB_WORKSPACE}/.github/scripts/update-release-version-and-tag.sh"
 
       - name: Resolve source metadata
         id: source
         if: steps.context.outputs.mode != 'skip'
         shell: bash
-        run: |
-          set -euo pipefail
-
-          mode="${{ steps.context.outputs.mode }}"
-          source_ref="${{ steps.context.outputs.source_ref }}"
-          source_sha="${{ steps.context.outputs.source_sha }}"
-
-          if [[ "$mode" == "deploy" ]]; then
-            if [[ "${GITHUB_EVENT_NAME}" == "release" ]]; then
-              source_ref="${{ steps.release.outputs.source_ref }}"
-              source_sha="${{ steps.release.outputs.source_sha }}"
-            fi
-
-            if [[ -z "$source_sha" ]]; then
-              source_sha="$(git rev-parse "${source_ref}^{commit}")"
-            fi
-
-            author_name="$(git show -s --format=%an "${source_sha}")"
-            author_email="$(git show -s --format=%ae "${source_sha}")"
-          else
-            author_name="${GITHUB_ACTOR}"
-            author_email="${GITHUB_ACTOR}@users.noreply.github.com"
-          fi
-
-          {
-            echo "source_ref=${source_ref}"
-            echo "source_sha=${source_sha}"
-            echo "author_name=${author_name}"
-            echo "author_email=${author_email}"
-          } >> "$GITHUB_OUTPUT"
+        env:
+          MODE: ${{ steps.context.outputs.mode }}
+          INITIAL_SOURCE_REF: ${{ steps.context.outputs.source_ref }}
+          INITIAL_SOURCE_SHA: ${{ steps.context.outputs.source_sha }}
+          RELEASE_SOURCE_REF: ${{ steps.release.outputs.source_ref }}
+          RELEASE_SOURCE_SHA: ${{ steps.release.outputs.source_sha }}
+        run: bash "${GITHUB_WORKSPACE}/.github/scripts/resolve-source-metadata.sh"
 
       - name: Checkout deploy source
         if: steps.context.outputs.mode == 'deploy'
         shell: bash
-        run: |
-          set -euo pipefail
-          git checkout --force "${{ steps.source.outputs.source_sha }}"
+        env:
+          SOURCE_SHA: ${{ steps.source.outputs.source_sha }}
+        run: bash "${GITHUB_WORKSPACE}/.github/scripts/checkout-source-sha.sh"
 
       - name: Setup pnpm
         if: steps.context.outputs.mode == 'deploy'
@@ -229,86 +93,22 @@ jobs:
         id: build_meta
         if: steps.context.outputs.mode == 'deploy'
         shell: bash
-        run: |
-          set -euo pipefail
-
-          repository_url="${EXPLICIT_REPOSITORY_URL:-$DEFAULT_REPOSITORY_URL}"
-          built_date="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-
-          {
-            echo "repository_url=${repository_url}"
-            echo "built_date=${built_date}"
-          } >> "$GITHUB_OUTPUT"
+        run: bash "${GITHUB_WORKSPACE}/.github/scripts/build-metadata-values.sh"
 
       - name: Generate contributors.json
         if: steps.context.outputs.mode == 'deploy'
         env:
           GITHUB_TOKEN: ${{ github.token }}
         shell: bash
-        run: |
-          set -euo pipefail
-
-          node <<'NODE'
-          const fs = require('node:fs');
-          const path = require('node:path');
-
-          async function main() {
-            const owner = process.env.GITHUB_REPOSITORY_OWNER ?? '';
-            const token = process.env.GITHUB_TOKEN ?? '';
-            const repository = process.env.GITHUB_REPOSITORY ?? '';
-            const destination = path.join('public', 'contributors.json');
-            fs.mkdirSync(path.dirname(destination), { recursive: true });
-
-            try {
-              const response = await fetch(`https://api.github.com/repos/${repository}/contributors?per_page=100`, {
-                headers: {
-                  Accept: 'application/vnd.github+json',
-                  Authorization: `Bearer ${token}`,
-                  'User-Agent': 'pages-build-sync',
-                },
-              });
-
-              if (!response.ok) {
-                throw new Error(`GitHub API responded with ${response.status}`);
-              }
-
-              const payload = await response.json();
-              const contributors = Array.isArray(payload) ? payload : [];
-
-              const filtered = contributors
-                .filter((entry) => entry && typeof entry === 'object')
-                .map((entry) => ({
-                  login: String(entry.login ?? '').trim(),
-                  type: String(entry.type ?? '').trim(),
-                }))
-                .filter((entry) => entry.login.length > 0)
-                .filter((entry) => entry.type.toLowerCase() !== 'bot')
-                .filter((entry) => !entry.login.toLowerCase().endsWith('[bot]'))
-                .filter((entry) => entry.login.toLowerCase() !== owner.toLowerCase())
-                .slice(0, 5)
-                .map((entry) => entry.login);
-
-              fs.writeFileSync(destination, `${JSON.stringify({ contributors: filtered }, null, 2)}\n`);
-            } catch (error) {
-              console.warn(`Failed to fetch contributors: ${error instanceof Error ? error.message : String(error)}`);
-              fs.writeFileSync(destination, `${JSON.stringify({ contributors: [] }, null, 2)}\n`);
-            }
-          }
-
-          main().catch((error) => {
-            console.error(error);
-            process.exit(1);
-          });
-          NODE
+        run: node "${GITHUB_WORKSPACE}/.github/scripts/generate-contributors-json.mjs"
 
       - name: Read package version
         id: version
         if: steps.context.outputs.mode == 'deploy'
         shell: bash
-        run: |
-          set -euo pipefail
-          app_version="$(node -e "const fs=require('node:fs');const p=JSON.parse(fs.readFileSync('package.json','utf8'));process.stdout.write(String(p.version ?? ''));")"
-          echo "value=${app_version}" >> "$GITHUB_OUTPUT"
+        env:
+          PACKAGE_FILE: package.json
+        run: bash "${GITHUB_WORKSPACE}/.github/scripts/read-package-version-output.sh"
 
       - name: Build site
         if: steps.context.outputs.mode == 'deploy'
@@ -326,26 +126,7 @@ jobs:
         id: gh
         if: steps.context.outputs.mode != 'skip'
         shell: bash
-        run: |
-          set -euo pipefail
-
-          gh_pages_dir="${RUNNER_TEMP}/gh-pages-worktree"
-          rm -rf "${gh_pages_dir}"
-          git fetch origin gh-pages --no-tags >/dev/null 2>&1 || true
-
-          git branch -D gh-pages >/dev/null 2>&1 || true
-          if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
-            git worktree add -B gh-pages "${gh_pages_dir}" refs/remotes/origin/gh-pages
-          else
-            git worktree add --detach "${gh_pages_dir}"
-            pushd "${gh_pages_dir}" >/dev/null
-            git checkout --orphan gh-pages
-            git rm -rf . >/dev/null 2>&1 || true
-            find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
-            popd >/dev/null
-          fi
-
-          echo "path=${gh_pages_dir}" >> "$GITHUB_OUTPUT"
+        run: bash "${GITHUB_WORKSPACE}/.github/scripts/prepare-gh-pages-worktree.sh"
 
       - name: Apply page updates
         id: sync
@@ -361,171 +142,17 @@ jobs:
           SOURCE_AUTHOR_EMAIL: ${{ steps.source.outputs.author_email }}
           SOURCE_BRANCH_NAME: ${{ steps.context.outputs.branch_name }}
         shell: bash
-        run: |
-          set -euo pipefail
-
-          escape_html() {
-            local value="$1"
-            value="${value//&/&amp;}"
-            value="${value//</&lt;}"
-            value="${value//>/&gt;}"
-            value="${value//\"/&quot;}"
-            value="${value//\'/&#39;}"
-            printf '%s' "$value"
-          }
-
-          is_valid_segment() {
-            local value="$1"
-            [[ -n "$value" ]] || return 1
-            [[ "$value" != */* ]] || return 1
-            [[ "$value" =~ ^[A-Za-z0-9._-]+$ ]]
-          }
-
-          generate_experiments_index() {
-            local experiments_dir="docs/${REPO_NAME}/experiments"
-            local index_file="${experiments_dir}/index.html"
-            local branches_json_file="${experiments_dir}/branches.json"
-            local template_file="${GITHUB_WORKSPACE}/docs/experiments/index.html"
-            local root_template_file="${GITHUB_WORKSPACE}/docs/index.html"
-            local root_index_file="docs/index.html"
-            mkdir -p "${experiments_dir}"
-            mkdir -p "doc"
-
-            mapfile -t branches < <(
-              git ls-remote --heads origin "refs/heads/experiments/*" \
-                | awk '{print $2}' \
-                | sed 's#^refs/heads/##' \
-                | sort
-            )
-
-            if [[ ! -f "${template_file}" ]]; then
-              echo "::error::Missing experiments template at ${template_file}."
-              exit 1
-            fi
-            if [[ ! -f "${root_template_file}" ]]; then
-              echo "::error::Missing root template at ${root_template_file}."
-              exit 1
-            fi
-
-            branch_list_file="$(mktemp)"
-            printf "%s\n" "${branches[@]}" > "${branch_list_file}"
-
-            REPO_NAME="${REPO_NAME}" \
-            BRANCH_LIST_FILE="${branch_list_file}" \
-            BRANCHES_JSON_FILE="${branches_json_file}" \
-            node <<'NODE'
-            const fs = require('node:fs');
-
-            const repositoryName = process.env.REPO_NAME ?? '';
-            const branchListFile = process.env.BRANCH_LIST_FILE ?? '';
-            const outputFile = process.env.BRANCHES_JSON_FILE ?? '';
-
-            const branchLines = fs
-              .readFileSync(branchListFile, 'utf8')
-              .split(/\r?\n/)
-              .map((line) => line.trim())
-              .filter((line) => line.length > 0);
-
-            const isValidSegment = (value) =>
-              value.length > 0 && !value.includes('/') && /^[A-Za-z0-9._-]+$/.test(value);
-
-            const branches = branchLines.map((branch) => {
-              const suffix = branch.startsWith('experiments/')
-                ? branch.slice('experiments/'.length)
-                : branch;
-              const deployable = isValidSegment(suffix);
-              const branchData = {
-                name: branch,
-                deployable,
-              };
-
-              if (deployable) {
-                branchData.path = `/${repositoryName}/experiments/${suffix}/`;
-              }
-
-              return branchData;
-            });
-
-            const payload = {
-              generatedAt: new Date().toISOString(),
-              branches,
-            };
-
-            fs.writeFileSync(outputFile, `${JSON.stringify(payload, null, 2)}\n`);
-            NODE
-
-            rm -f "${branch_list_file}"
-            cp "${root_template_file}" "${root_index_file}"
-            cp "${template_file}" "${index_file}"
-          }
-
-          if [[ "${MODE}" == "deploy" ]]; then
-            dist_dir="${GITHUB_WORKSPACE}/dist"
-            if [[ ! -d "${dist_dir}" ]]; then
-              echo "::error::dist folder does not exist for deploy mode."
-              exit 1
-            fi
-
-            rm -rf "${TARGET_DIR}"
-            mkdir -p "${TARGET_DIR}"
-            cp -a "${dist_dir}/." "${TARGET_DIR}/"
-          elif [[ "${MODE}" == "cleanup" ]]; then
-            rm -rf "${TARGET_DIR}"
-          fi
-
-          generate_experiments_index
-
-          git add -A
-          if git diff --cached --quiet; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          commit_title="chore(pages): refresh experiments metadata"
-          if [[ "${MODE}" == "deploy" ]]; then
-            commit_title="chore(pages): sync ${TARGET_DIR}"
-          elif [[ "${MODE}" == "cleanup" ]]; then
-            commit_title="chore(pages): remove ${TARGET_DIR}"
-          elif [[ -n "${SOURCE_BRANCH_NAME}" ]]; then
-            commit_title="chore(pages): refresh experiments metadata for ${SOURCE_BRANCH_NAME}"
-          fi
-
-          author_name="${SOURCE_AUTHOR_NAME:-${GITHUB_ACTOR}}"
-          author_email="${SOURCE_AUTHOR_EMAIL:-${GITHUB_ACTOR}@users.noreply.github.com}"
-
-          GIT_COMMITTER_NAME="github-actions[bot]" \
-          GIT_COMMITTER_EMAIL="41898282+github-actions[bot]@users.noreply.github.com" \
-          git commit --author="${author_name} <${author_email}>" \
-            -m "${commit_title}" \
-            -m "Source Ref: ${SOURCE_REF:-n/a}" \
-            -m "Source SHA: ${SOURCE_SHA:-n/a}"
-
-          echo "changed=true" >> "$GITHUB_OUTPUT"
+        run: bash "${GITHUB_WORKSPACE}/.github/scripts/sync-pages-content.sh"
 
       - name: Push gh-pages updates
         if: steps.sync.outputs.changed == 'true'
         working-directory: ${{ steps.gh.outputs.path }}
         shell: bash
-        run: |
-          set -euo pipefail
-
-          for attempt in 1 2 3; do
-            if git push origin gh-pages; then
-              exit 0
-            fi
-
-            if [[ "$attempt" -eq 3 ]]; then
-              echo "::error::Failed to push gh-pages after 3 attempts."
-              exit 1
-            fi
-
-            git fetch origin gh-pages
-            git rebase origin/gh-pages
-          done
+        run: bash "${GITHUB_WORKSPACE}/.github/scripts/push-gh-pages-with-retry.sh"
 
       - name: Cleanup worktree
         if: always() && steps.context.outputs.mode != 'skip'
         shell: bash
-        run: |
-          set -euo pipefail
-          git worktree remove --force "${{ steps.gh.outputs.path }}" || true
+        env:
+          WORKTREE_PATH: ${{ steps.gh.outputs.path }}
+        run: bash "${GITHUB_WORKSPACE}/.github/scripts/cleanup-worktree.sh"
