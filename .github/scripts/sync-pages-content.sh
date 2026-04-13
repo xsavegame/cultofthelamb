@@ -2,7 +2,7 @@
 set -euo pipefail
 
 generate_experiments_metadata() {
-  local experiments_dir="docs/${REPO_NAME}/experiments"
+  local experiments_dir="docs/experiments"
   local branches_json_file="${experiments_dir}/branches.json"
 
   mkdir -p "${experiments_dir}"

@@ -20,7 +20,7 @@ is_valid_segment() {
 if [[ "${GITHUB_EVENT_NAME}" == "release" ]]; then
   mode="deploy"
   source_ref="${RELEASE_TAG_NAME:-}"
-  target_dir="docs/${repo_name}/latest"
+  target_dir="docs/latest"
   base_url="/${repo_name}/latest/"
 elif [[ "${GITHUB_EVENT_NAME}" == "push" ]]; then
   branch_name="${GITHUB_REF_NAME}"
@@ -30,7 +30,7 @@ elif [[ "${GITHUB_EVENT_NAME}" == "push" ]]; then
       mode="deploy"
       source_ref="$branch_name"
       source_sha="${GITHUB_SHA}"
-      target_dir="docs/${repo_name}/experiments/${segment}"
+      target_dir="docs/experiments/${segment}"
       base_url="/${repo_name}/experiments/${segment}/"
     else
       mode="index_only"
@@ -43,7 +43,7 @@ elif [[ "${GITHUB_EVENT_NAME}" == "delete" ]]; then
       segment="${branch_name#experiments/}"
       if is_valid_segment "$segment"; then
         mode="cleanup"
-        target_dir="docs/${repo_name}/experiments/${segment}"
+        target_dir="docs/experiments/${segment}"
         base_url="/${repo_name}/experiments/${segment}/"
       else
         mode="index_only"
