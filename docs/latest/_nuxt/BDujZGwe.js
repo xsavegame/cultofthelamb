@@ -1,0 +1,1 @@
+import{_ as s}from"./DlAUqK2U.js";import{c as e,a as r,o as c}from"./Di1u3-g0.js";const t={},n={class:"row"};function a(i,o){return c(),e("div",n,o[0]||(o[0]=[r("div",{class:"col"}," Work in Progress ",-1)]))}const d=s(t,[["render",a]]);export{d as default};

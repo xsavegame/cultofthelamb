@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Experiments</title>
+    <style>
+      body {
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;
+        margin: 2rem auto;
+        max-width: 60rem;
+        line-height: 1.5;
+        padding: 0 1rem;
+      }
+
+      h1 {
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Experiments</h1>
+    <p>Source branches matching <code>experiments/**</code>.</p>
+    <ul id="experiment-list">
+      <li>Loading...</li>
+    </ul>
+    <script>
+      (async () => {
+        const listElement = document.getElementById("experiment-list");
+        if (!listElement) {
+          return;
+        }
+
+        try {
+          const response = await fetch("./branches.json", { cache: "no-store" });
+          if (!response.ok) {
+            throw new Error(`Failed to load branches.json (${response.status}).`);
+          }
+
+          const payload = await response.json();
+          const branches = Array.isArray(payload?.branches) ? payload.branches : [];
+
+          listElement.textContent = "";
+          if (branches.length === 0) {
+            const item = document.createElement("li");
+            item.textContent = "No experiment branches found.";
+            listElement.appendChild(item);
+            return;
+          }
+
+          for (const branch of branches) {
+            const item = document.createElement("li");
+            const name = typeof branch?.name === "string" ? branch.name : "(unknown)";
+            const deployable = Boolean(branch?.deployable);
+            const path = typeof branch?.path === "string" ? branch.path : "";
+
+            if (deployable && path.length > 0) {
+              const link = document.createElement("a");
+              link.href = path;
+              link.textContent = name;
+              item.appendChild(link);
+            } else {
+              item.textContent = `${name} (not deployable)`;
+            }
+
+            listElement.appendChild(item);
+          }
+        } catch (error) {
+          listElement.textContent = "";
+          const item = document.createElement("li");
+          item.textContent = `Unable to load experiments list. ${
+            error instanceof Error ? error.message : String(error)
+          }`;
+          listElement.appendChild(item);
+        }
+      })();
+    </script>
+  </body>
+</html>

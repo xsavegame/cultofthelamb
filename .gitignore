@@ -1,0 +1,16 @@
+node_modules
+
+# Output
+dist
+
+# Temporary
+.py
+.tmp
+__pycache__
+
+.env
+.env.*
+!.env.example
+
+src/generated/data/assets/**/*
+.vite

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Redirecting...</title>
+    <meta http-equiv="refresh" content="0; url=./latest/" />
+  </head>
+  <body>
+    <noscript>
+      Redirecting to <a href="./latest/">latest</a>.
+    </noscript>
+    <script>
+      (function () {
+        const parts = window.location.pathname.split("/").filter(Boolean);
+        const repo = parts.length > 0 ? parts[0] : "";
+        const target = repo ? `/${repo}/latest/` : "/latest/";
+        window.location.replace(target);
+      })();
+    </script>
+  </body>
+</html>
