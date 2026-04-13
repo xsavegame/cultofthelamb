@@ -1,0 +1,1 @@
+var e=`/cultofthelamb/experiments/v2/assets/DLC_2-js_Z3DPP.dat`;export{e as default};

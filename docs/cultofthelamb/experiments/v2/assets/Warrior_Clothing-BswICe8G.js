@@ -1,0 +1,1 @@
+var e=`/cultofthelamb/experiments/v2/assets/Warrior_Clothing-B9MTV6tk.dat`;export{e as default};

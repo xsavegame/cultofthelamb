@@ -1,0 +1,1 @@
+var e=`/cultofthelamb/experiments/v2/assets/Special_6_Clothing-DBZR_PKR.dat`;export{e as default};

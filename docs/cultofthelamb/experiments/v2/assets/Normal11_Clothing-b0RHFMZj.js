@@ -1,0 +1,1 @@
+var e=`/cultofthelamb/experiments/v2/assets/Normal11_Clothing-D1PghXcj.dat`;export{e as default};

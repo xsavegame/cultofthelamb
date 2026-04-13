@@ -1,0 +1,1 @@
+var e=`/cultofthelamb/experiments/v2/assets/DLC_4-kw-tm6dP.dat`;export{e as default};
