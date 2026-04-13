@@ -1,11 +1,47 @@
-@layer tailwind-theme;
-@layer tailwind-reset;
+@layer tailwind-theme {
+  :root {
+    --layer-tailwind-theme: 1;
+  }
+}
 
-@layer vuetify-core;
-@layer vuetify-components;
-@layer vuetify-overrides;
-@layer vuetify-utilities;
+@layer tailwind-reset {
+  :root {
+    --layer-tailwind-reset: 1;
+  }
+}
 
-@layer tailwind-utilities;
+@layer vuetify-core {
+  :root {
+    --layer-vuetify-core: 1;
+  }
+}
 
-@layer vuetify-final;
+@layer vuetify-components {
+  :root {
+    --layer-vuetify-components: 1;
+  }
+}
+
+@layer vuetify-overrides {
+  :root {
+    --layer-vuetify-overrides: 1;
+  }
+}
+
+@layer vuetify-utilities {
+  :root {
+    --layer-vuetify-utilities: 1;
+  }
+}
+
+@layer tailwind-utilities {
+  :root {
+    --layer-tailwind-utilities: 1;
+  }
+}
+
+@layer vuetify-final {
+  :root {
+    --layer-vuetify-final: 1;
+  }
+}

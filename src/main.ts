@@ -5,21 +5,24 @@
  */
 
 // Composables
-import { createApp } from 'vue'
-
-// Plugins
-import { registerPlugins } from '@/plugins'
-
-// Components
-import App from './App.vue'
+import { createApp } from 'vue';
 
 // Styles
-import 'unfonts.css'
-import './styles/tailwind.css'
-import './styles/main.scss'
+import './styles/layers.css';
+import 'unfonts.css';
+import './styles/tailwind.css';
+import '@mdi/font/css/materialdesignicons.css';
+import 'vuetify/styles';
+import './styles/main.scss';
 
-const app = createApp(App)
+// Plugins
+import { registerPlugins } from '@/plugins';
 
-registerPlugins(app)
+// Components
+import App from './App.vue';
 
-app.mount('#app')
+const app = createApp(App);
+
+registerPlugins(app);
+
+app.mount('#app');
