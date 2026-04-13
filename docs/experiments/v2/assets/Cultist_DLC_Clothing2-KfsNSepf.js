@@ -1,0 +1,1 @@
+var e=`/cultofthelamb/experiments/v2/assets/Cultist_DLC_Clothing2-BocxllzT.dat`;export{e as default};

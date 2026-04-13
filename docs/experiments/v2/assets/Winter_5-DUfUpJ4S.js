@@ -1,0 +1,1 @@
+var e=`/cultofthelamb/experiments/v2/assets/Winter_5-BJYihEc_.dat`;export{e as default};
