@@ -1,39 +1,60 @@
 {
+  "name": "cultofthelamb",
   "private": true,
+  "type": "module",
+  "version": "0.0.0",
   "scripts": {
-    "build": "nuxi typecheck && nuxi build",
-    "dev": "nuxi dev",
-    "generate": "nuxi typecheck && nuxi generate",
-    "preview": "nuxi preview",
-    "postinstall": "nuxi prepare"
-  },
-  "devDependencies": {
-    "@nuxt/image": "^1.9.0",
-    "@pinia/nuxt": "^0.9.0",
-    "@popperjs/core": "^2.11.8",
-    "@sinclair/typebox": "^0.34.16",
-    "@types/bootstrap": "^5.2.10",
-    "@types/lodash": "^4.17.15",
-    "@types/node": "^18.19.75",
-    "bootstrap": "^5.3.3",
-    "json-editor-vue": "^0.17.3",
-    "lodash": "^4.17.21",
-    "nuxt": "^3.15.0",
-    "sass": "^1.83.4",
-    "source-map-support": "^0.5.21",
-    "typescript": "~5.5.0",
-    "vue-tsc": "~2.1.6"
-  },
-  "packageManager": "pnpm@10.2.0",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "json-editor-vue",
-      "sharp",
-      "vue-demi"
-    ]
+    "dev": "vite",
+    "build": "run-p type-check \"build-only {@}\" --",
+    "preview": "vite preview",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build --force",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "mcp": "ruler apply",
+    "mcp:revert": "ruler revert"
   },
   "dependencies": {
+    "@esotericsoftware/spine-player": "^4.2.109",
+    "@fontsource/roboto": "^5.2.10",
+    "@fontsource/roboto-mono": "^5.2.8",
+    "@mdi/font": "7.4.47",
     "@msgpack/msgpack": "^3.1.3",
-    "lz4js": "^0.2.0"
+    "@pixi-spine/all-3.8": "4.0.6",
+    "ajv": "^8.18.0",
+    "json-editor-vue": "^0.18.1",
+    "lodash": "^4.18.1",
+    "lz4js": "^0.2.0",
+    "pinia": "^3.0.4",
+    "pixi.js": "7.4.3",
+    "reflect-metadata": "^0.2.2",
+    "vue": "^3.5.30",
+    "vue-i18n": "^11.3.0",
+    "vue-router": "^5.0.3",
+    "vuetify": "^4.0.2"
+  },
+  "devDependencies": {
+    "@intellectronica/ruler": "^0.3.37",
+    "@tailwindcss/vite": "^4.2.1",
+    "@tsconfig/node22": "^22.0.5",
+    "@types/lodash": "^4.17.24",
+    "@types/node": "^24.12.0",
+    "@vitejs/plugin-vue": "^6.0.5",
+    "@vue/tsconfig": "^0.9.0",
+    "eslint": "^9.39.4",
+    "eslint-config-vuetify": "^4.3.4",
+    "npm-run-all2": "^8.0.4",
+    "sass-embedded": "^1.98.0",
+    "tailwindcss": "^4.2.1",
+    "typescript": "~5.9.3",
+    "unplugin-fonts": "^1.4.0",
+    "vite": "^8.0.0",
+    "vite-plugin-vuetify": "^2.1.3",
+    "vue-tsc": "^3.2.5"
+  },
+  "overrides": {
+    "unplugin-fonts": {
+      "vite": "^8.0.0"
+    }
   }
 }
