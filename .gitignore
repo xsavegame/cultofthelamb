@@ -14,3 +14,4 @@ __pycache__
 
 src/generated/data/assets/**/*
 .vite
+.test

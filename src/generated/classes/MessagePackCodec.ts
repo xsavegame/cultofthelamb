@@ -70,6 +70,10 @@ function isObjectLike(value: unknown): value is object {
 }
 
 function normalizeMetaKey(container: unknown, key: string | number): string | number {
+  if (container instanceof Map) {
+    return key;
+  }
+
   if (Array.isArray(container)) {
     if (typeof key === "number") {
       return key;
@@ -449,6 +453,30 @@ export class CustomMsgPack {
       return;
     }
 
+    if (value instanceof Map) {
+      this.writeMapHeader(writer, value.size);
+      let entryIndex = 0;
+      for (const [key, mapValue] of value.entries()) {
+        const keyPath = `${path}.{key#${entryIndex}}`;
+        this.writeValue(writer, key, keyPath, undefined, codecOptions);
+
+        const mapValuePath = `${path}.${String(key)}`;
+        const mapKey =
+          typeof key === "string" || typeof key === "number"
+            ? key
+            : String(key);
+        this.writeValue(
+          writer,
+          mapValue,
+          mapValuePath,
+          getNumericKind(value, mapKey),
+          codecOptions,
+        );
+        entryIndex += 1;
+      }
+      return;
+    }
+
     if (typeof value === "object") {
       const keys = Object.keys(value);
       this.writeMapHeader(writer, keys.length);
@@ -727,12 +755,16 @@ export class CustomMsgPack {
     return out;
   }
 
-  private static readMap(reader: Reader, size: number, path: string): Record<string, any> {
-    const out: Record<string, any> = {};
+  private static readMap(reader: Reader, size: number, path: string): Map<any, any> {
+    const out = new Map<any, any>();
     for (let i = 0; i < size; i++) {
       const rawKey = this.readValue(reader, undefined, undefined, `${path}.{key#${i}}`);
-      const key = typeof rawKey === "string" ? rawKey : `${rawKey}`;
-      out[key] = this.readValue(reader, out, key, `${path}.${key}`);
+      const key =
+        typeof rawKey === "string" || typeof rawKey === "number"
+          ? rawKey
+          : `${rawKey}`;
+      const value = this.readValue(reader, out, key, `${path}.${String(rawKey)}`);
+      out.set(rawKey, value);
     }
     return out;
   }

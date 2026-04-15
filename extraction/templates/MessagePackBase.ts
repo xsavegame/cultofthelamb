@@ -4,6 +4,7 @@ import {
   coerceKindedNumber,
   CustomMsgPack,
   getNumericKind,
+  MsgPackExtData,
   resolveMsgPackCodecOptions,
   setNumericKind,
   tryDecodeLz4BlockArrayPayload,
@@ -120,6 +121,14 @@ function toJsonSafeValue(value: any): any {
 
   if (Array.isArray(value)) {
     return value.map((item) => toJsonSafeValue(item));
+  }
+
+  if (value instanceof Map) {
+    const out: any = {};
+    for (const [key, mapValue] of value.entries()) {
+      out[String(key)] = toJsonSafeValue(mapValue);
+    }
+    return out;
   }
 
   if (value instanceof Date) {
@@ -477,13 +486,16 @@ export class MessagePackObject extends ExportedClass {
     let payload: any;
 
     if (isMapMode) {
-      const res: any = {};
+      const res = new Map<any, any>();
       for (const { index, propertyKey, info } of keys.values()) {
-        res[index] = constructor.toMsgPackObject(
+        res.set(
+          index,
+          constructor.toMsgPackObject(
           this[propertyKey as keyof this],
           info,
           `${constructor.name}.${propertyKey}`,
           codecOptions,
+          ),
         );
 
         const kind = selectPreferredNumericKind(
@@ -497,11 +509,14 @@ export class MessagePackObject extends ExportedClass {
       }
 
       for (const [key, value] of this.unknownKeys.entries()) {
-        res[key] = constructor.toMsgPackObject(
-          value,
-          undefined,
-          `${constructor.name}.__UNKNOWN_${String(key)}__`,
-          codecOptions,
+        res.set(
+          key,
+          constructor.toMsgPackObject(
+            value,
+            undefined,
+            `${constructor.name}.__UNKNOWN_${String(key)}__`,
+            codecOptions,
+          ),
         );
         const kind = selectPreferredNumericKind(
           undefined,
@@ -715,7 +730,11 @@ export class MessagePackObject extends ExportedClass {
       );
     }
 
-    const entries = Array.isArray(obj) ? obj.entries() : Object.entries(obj);
+    const entries = obj instanceof Map
+      ? obj.entries()
+      : Array.isArray(obj)
+        ? obj.entries()
+        : Object.entries(obj);
 
     for (const [idx, val] of entries) {
       const keyInfo = lookupKeyInfo(keys, idx as any);
@@ -753,6 +772,23 @@ export class MessagePackObject extends ExportedClass {
 
     if (Array.isArray(source)) {
       return source[index];
+    }
+
+    if (source instanceof Map) {
+      if (name && source.has(name)) {
+        return source.get(name);
+      }
+
+      if (source.has(index)) {
+        return source.get(index);
+      }
+
+      const numericKey = `${index}`;
+      if (source.has(numericKey)) {
+        return source.get(numericKey);
+      }
+
+      return undefined;
     }
 
     if (typeof source !== 'object') {
@@ -989,6 +1025,16 @@ export class MessagePackObject extends ExportedClass {
       typeof instance.toMsgPackObject === 'function'
     ) {
       return instance.toMsgPackObject(codecOptions);
+    }
+
+    // Preserve binary/ext wire values found in unknown fields.
+    if (
+      instance instanceof Map ||
+      instance instanceof Uint8Array ||
+      instance instanceof ArrayBuffer ||
+      instance instanceof MsgPackExtData
+    ) {
+      return instance;
     }
 
     const obj: any = {};
